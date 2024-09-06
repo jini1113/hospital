@@ -8,6 +8,13 @@ if (
 ) {
     header("Location:../login.php");
 }
+if (isset($_GET['id'])) {
+    $query = mysqli_query($cnn, "select * from d_schedule where id=" . $_GET['id'] . "");
+    $row = mysqli_fetch_array($query);
+    $availableDays = explode(", ", $row['days']);
+} else {
+    $availableDays = []; // Initialize if not updating
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,18 +169,18 @@ if (
                             if (isset($_POST['btnUpdate'])) {
                                 $id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
                                 $doctor = mysqli_real_escape_string($cnn, $_POST['txtDoc']);
-                                
+
                                 // Check if txtDays is set and is an array
                                 if (isset($_POST['txtDays']) && is_array($_POST['txtDays'])) {
                                     $days = implode(", ", $_POST['txtDays']);
                                 } else {
                                     $days = ""; // Set to empty string if no days are selected
                                 }
-                                
+
                                 $from = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtFtime'])));
                                 $to = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtTotime'])));
                                 $msg = mysqli_real_escape_string($cnn, $_POST['txtMsg']);
-                            
+
                                 $query = mysqli_query($cnn, "UPDATE d_schedule SET 
                                     doctor_id = '$doctor',
                                     days = '$days',
@@ -181,7 +188,7 @@ if (
                                     to_time = '$to',
                                     message = '$msg'
                                     WHERE id = '$id'");
-                            
+
                                 if ($query) {
                                     echo "<script>window.location.replace('schedule.php');</script>";
                                 } else {
