@@ -8,6 +8,17 @@ if (
 ) {
     header("Location:login.php");
 }
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $query = mysqli_query($cnn, "SELECT * FROM b_patients WHERE id=" . $id);
+    $patient_data = mysqli_fetch_array($query);
+
+    // Populate form fields with current values
+
+    $current_bed_no = $patient_data['bed_id'];
+    $current_ward = $patient_data['ward_id'];
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,9 +102,10 @@ if (
                                                 <select class="select" id="txtWard" name="txtWard">
                                                     <option value="">Select</option>
                                                     <?php
-                                                    $query_ward = mysqli_query($cnn, "SELECT * FROM ward");
-                                                    while ($row_ward = mysqli_fetch_array($query_ward)) {
-                                                        echo "<option value='" . $row_ward['id'] . "'>" . $row_ward['name'] . "</option>";
+                                                    $wards_query = mysqli_query($cnn, "SELECT * FROM ward");
+                                                    while ($ward = mysqli_fetch_array($wards_query)) {
+                                                        $selected = ($current_ward == $ward['id']) ? "selected" : "";
+                                                        echo "<option value='" . $ward['id'] . "' $selected>" . $ward['name'] . "</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -175,29 +187,35 @@ if (
                                 }
                             }
                             // update code
-                            // if (isset($_POST['btnUpdate'])) {
-                            //     $id = $_POST['txtUId'];
-                            //     $name = $_POST['txtPatient'];
-                            //     $email = $_POST['txtMail'];
-                            //     $phone = $_POST['txtPhone'];
-                            //     $department = $_POST['txtDep'];
-                            //     $doctor = $_POST['txtDoc'];
-                            //     $date = $_POST['txtDate'];
-                            //     $time = $_POST['txtTime'];
-                            //     $msg = $_POST['txtMsg'];
+                            if (isset($_POST['btnUpdate'])) {
+                                $id = $_POST['txtUId'];
+                                $patient = $_POST['txtPatient'];
+                                $bed_no = $_POST['txtBno'];
+                                $ward = $_POST['txtWard'];
+                                $a_date = $_POST['txtAdate'];
+                                $d_date = $_POST['txtDate'];
+
+                                // Initialize $cols for the update query
+                                $cols = ""; // Ensure $cols is initialized
                             
+                                // Check if bed_no is provided
+                                if (!empty($bed_no)) {
+                                    $cols .= "bed_id=" . $bed_no . ", "; // Use $bed_no instead of $city
+                                } else {
+                                    $cols .= "bed_id='0', ";
+                                }
 
+                                // Add other fields to the update query
+                                $cols .= "patient_id='" . $patient . "', ward_id='" . $ward . "', a_date='" . $a_date . "', d_date='" . $d_date . "'";
 
-
-                            //     $cols .= "patient_id='" . $name . "',phone_no='" . $phone . "',date='" . $date . "',time='" . $time . "',doctor_id='" . $doctor . "',department_id='" . $department . "',message='" . $msg . "'";
-                            //     $query = mysqli_query($cnn, "update appointment set " . $cols . " where id=" . $id . "");
-                            //     if ($query > 0) {
-                            //         echo "<script>window.location.replace('appointments.php');</script>";
-                            //     } else {
-                            //         echo "<script>alert('Some error occured.Please try again');</script>";
-                            //     }
-                            // }
-                            
+                                // Execute the update query
+                                $query = mysqli_query($cnn, "UPDATE b_patients SET " . rtrim($cols, ', ') . " WHERE id=" . $id);
+                                if ($query > 0) {
+                                    echo "<script>window.location.replace('b_patients.php');</script>";
+                                } else {
+                                    echo "<script>alert('Some error occurred. Please try again');</script>";
+                                }
+                            }
                             ?>
                         </div>
                     </div>

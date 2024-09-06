@@ -78,16 +78,7 @@ if ($_GET['what'] == "getInsCityV") {
     }
     echo json_encode($response);
 }
-//get bed_no
-if ($_GET['what'] == "getInBed") {
-    $wardId = $_POST['wardId'];
-    $response = [];
-    $query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id = '" . $wardId . "'");
-    while ($row = mysqli_fetch_assoc($query)) {
-        array_push($response, $row);
-    }
-    echo json_encode($response);
-}
+
 // get insert city update staff
 if ($_GET['what'] == "retUCity") {
     $id = $_POST['id'];
@@ -104,6 +95,41 @@ if ($_GET['what'] == "retUCity") {
     } else {
         $response = ["city" => $response];
     }
+    echo json_encode($response);
+}
+//get bed_no
+if ($_GET['what'] == "getInBed") {
+    $wardId = $_POST['wardId'];
+    $response = [];
+    $query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id = '" . $wardId . "'");
+    while ($row = mysqli_fetch_assoc($query)) {
+        array_push($response, $row);
+    }
+    echo json_encode($response);
+}
+// get insert city update staff
+if ($_GET['what'] == "getUpBed") {
+    $id = $_POST['id']; // Ward ID
+    $main = $_POST['main']; // Patient ID
+    $response = [];
+
+    // Fetch the patient's current bed information
+    $query_select = mysqli_query($cnn, "SELECT * FROM b_patients WHERE id=" . $main);
+    $row_select = mysqli_fetch_array($query_select);
+
+    // Fetch beds for the selected ward
+    $query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id=" . $id);
+    $beds = [];
+    while ($row = mysqli_fetch_array($query)) {
+        $beds[] = $row; // Collect beds in an array
+    }
+
+    // Include the current bed ID and bed number in the response
+    $response = [
+        "bed_id" => isset($row_select['bed_id']) ? $row_select['bed_id'] : null, // Ensure bed_id is set
+        "bed_number" => isset($row_select['bed_no']) ? $row_select['bed_no'] : null, // Fetch bed number
+        "beds" => $beds
+    ];
     echo json_encode($response);
 }
 // active role

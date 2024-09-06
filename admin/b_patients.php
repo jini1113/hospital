@@ -48,7 +48,7 @@ include("header.php");
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_app">
+                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_ward">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -98,7 +98,7 @@ include("header.php");
                                             echo "<td><button type='button' class='btn custom-badge status-red block_active action-button' style='border-radius:4px;' data-id='" . $row['id'] . "'>Discharge</button></td>";
                                         }
 
-                                        echo "<td><a href='add-edit-appointment.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
+                                        echo "<td><a href='add-edit-b_patients.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                         // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";
                                     
@@ -379,17 +379,17 @@ include("header.php");
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
     <?php include("included_js.php"); ?>
-    <script type="text/javascript" src="../newjs/app.js"></script>
+    <script type="text/javascript" src="../newjs/b_patients.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tbl_app').DataTable({
+            $('#tbl_ward').DataTable({
                 "pageLength": 10,
                 "searching": true,
                 "language": {
                     "lengthMenu": "Show _MENU_ entries",
-                    "zeroRecords": "No holidays found",
+                    "zeroRecords": "No Entries found",
                     "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                    "infoEmpty": "Showing 0 to 0 of 0 holidays",
+                    "infoEmpty": "Showing 0 to 0 of 0 Entries",
                     "infoFiltered": "(filtered from _MAX_ total entries)"
                 }
             });
