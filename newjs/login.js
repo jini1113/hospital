@@ -62,21 +62,15 @@ $(document).ready(function () {
                 data: json,
                 dataType: "JSON",
                 success: function (response) {
-                    console.log(response); // Log response for debugging
-
-                    if (response.success) {
-
-                        // Redirect based on the user's role
-                        if (response.role == "Admin") {
-                            handleSuccess(response, 'admin/index.php');
-                        } else if (response.role == "sub_vendor") {
-                            handleSuccess(response, 'sub-vender/index.php');
-                        } else {
-                            handleSuccess(response, 'vendor/index.php');
-                        }
+                    console.log(response);
+                    if (response.role == "Admin") {
+                        handleSuccess(response, 'admin/index.php');
+                    } else if (response.role == "Doctor") {
+                        handleSuccess(response, 'doctor/index.php');
+                    } else {
+                        handleSuccess(response, 'staff/index.php');
                     }
-                },
-
+                }
             });
         }
     });

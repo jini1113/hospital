@@ -73,7 +73,7 @@ include("header.php");
                         <h4 class="page-title" style='font-weight:600;color:#1E1C7F;'>Doctors</h4>
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-doctor.php" class="btn btn-primary btn-rounded float-right"><i
+                        <a href="add-edit-doctor.php" class="btn btn-primary btn-rounded float-right"><i
                                 class="fa fa-plus"></i> Add Doctor</a>
                     </div>
                 </div>
