@@ -175,7 +175,7 @@ include("../connection.php");
                     <a class="dropdown-item p-2 " style="font-size:16px;" href="edit-profile.php"> <i
                             class="fa fa-pencil-square-o mr-2" style="font-size:20px;font-weight:bold;"></i>Edit
                         Profile</a>
-                    <a class="dropdown-item p-2" style="font-size:16px;" href="settings.html"><i class="fa fa-lock mr-3"
+                    <a class="dropdown-item p-2" style="font-size:16px;" href="../changepwd.php"><i class="fa fa-lock mr-3"
                             style="font-size:20px;font-weight:bold;"></i>Change-Password</a>
                     <a class="dropdown-item p-2" style="font-size:16px;" href="logout.php"><i
                             class="fa fa-sign-out mr-2" style="font-size:20px;font-weight:bold;"></i>Logout</a>
@@ -201,7 +201,7 @@ include("../connection.php");
                             <a href="index.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                         </li>
                         <li>
-                        <a href="d_schedule.php"><i class="fa fa-calendar"></i> <span>Schedule</span></a>
+                        <a href="schedule.php"><i class="fa fa-calendar"></i> <span>Schedule</span></a>
                     </li>
                     <!-- <li>
                         <a href="schedule.php"><i class="fa fa-calendar-check-o"></i> <span>Doctor

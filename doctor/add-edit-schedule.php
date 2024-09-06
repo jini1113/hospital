@@ -25,13 +25,13 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../admin/assets/img/favicon.ico">
     <title>Hospital Management System - Holidays</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/style.css">
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>
@@ -436,14 +436,14 @@ if (isset($_GET['id'])) {
                 </div>
             </div>
             <div class="sidebar-overlay" data-reff=""></div>
-            <script src="assets/js/jquery-3.2.1.min.js"></script>
-            <script src="assets/js/popper.min.js"></script>
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script src="assets/js/jquery.slimscroll.js"></script>
-            <script src="assets/js/select2.min.js"></script>
-            <script src="assets/js/moment.min.js"></script>
-            <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-            <script src="assets/js/app.js"></script>
+            <script src="../admin/assets/js/jquery-3.2.1.min.js"></script>
+            <script src="../admin/assets/js/popper.min.js"></script>
+            <script src="../admin/assets/js/bootstrap.min.js"></script>
+            <script src="../admin/assets/js/jquery.slimscroll.js"></script>
+            <script src="../admin/assets/js/select2.min.js"></script>
+            <script src="../admin/assets/js/moment.min.js"></script>
+            <script src="../admin/assets/js/bootstrap-datetimepicker.min.js"></script>
+            <script src="../admin/assets/js/app.js"></script>
             <script>
                 $(function () {
                     $('#datetimepicker3').datetimepicker({
