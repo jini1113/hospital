@@ -254,6 +254,17 @@ if (
                                 <li><a href="blood-issue.php"> Blood Issue </a></li>
                             </ul>
                         </li>
+                        <li class="submenu">
+                            <a href="#"><i class="	fa fa-bed"></i> <span> IPD/OPD</span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="in_patient.php">In Patient</a></li>
+                                <li><a href="out_patient.php">Out Patient</a></li>
+                                <!-- <li><a href="bed.php">Bed Status</a></li>
+                            <li><a href="b_patients.php">Bed Allotment</a></li>
+                            <li><a href="blood-issue.php"> Blood Issue </a></li> -->
+                            </ul>
+                        </li>
 
                         <li class="submenu">
                             <a href="#"><i class="fa fa-money"></i> <span> Accounts </span> <span

@@ -6,10 +6,9 @@ $("#txtWard").on("change", function () {
         data: { wardId: wardId },
         dataType: "JSON",
         success: function (response) {
-            console.log(response);
             var s = "<option value=''>Select</option>";
             for (var i = 0; i < response.length; i++) {
-                s += "<option value='" + response[i].bed_no + "'>" + response[i].bed_no + "</option>";
+                s += "<option value='" + response[i].id + "'>" + response[i].bed_no + "</option>";
             }
             $("#txtBno").html(s);
         }
@@ -36,3 +35,5 @@ $("#txtWard").on("change", function () {
     });
 });
 $("#txtWard").trigger("change");
+
+

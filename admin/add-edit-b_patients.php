@@ -6,7 +6,7 @@ if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
     $_SESSION["admin"] == ""
 ) {
-    header("Location:../login.php");
+    header("Location:login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -93,17 +93,9 @@ if (
                                                     <?php
                                                     $query_ward = mysqli_query($cnn, "SELECT * FROM ward");
                                                     while ($row_ward = mysqli_fetch_array($query_ward)) {
-                                                        echo "<option value='" . $row_ward['id'] . "'";
-                                                        if (isset($_GET['id'])) {
-                                                            // Assuming $row is defined earlier and contains the data of the item being edited
-                                                            if ($row['ward_id'] == $row_ward['id']) {
-                                                                echo " selected";
-                                                            }
-                                                        }
-                                                        echo ">" . $row_ward['name'] . "</option>";
+                                                        echo "<option value='" . $row_ward['id'] . "'>" . $row_ward['name'] . "</option>";
                                                     }
                                                     ?>
-
                                                 </select>
                                             </div>
                                         </div>
@@ -111,14 +103,13 @@ if (
                                             <div class="form-group">
                                                 <label>Bed No.</label>
                                                 <select id="txtBno" name="txtBno" class="form-control">
+                                                    <option value="">Select</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -169,7 +160,7 @@ if (
 
                                 if (!empty($bed_no)) {
                                     $cols .= ", bed_id";
-                                    $values .= ", '$bed_no'";
+                                    $values .= ", '" . $bed_no . "'";
                                 } else {
                                     $cols .= ", bed_id";
                                     $values .= ", '0'";

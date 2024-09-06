@@ -38,11 +38,11 @@ include("header.php");
             <div class="content">
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h4 class="page-title">Add In-Patient</h4>
+                        <h4 class="page-title">Add Out-Patient</h4>
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-edit-in_patient.php" class="btn btn btn-primary btn-rounded float-right"><i
-                                class="fa fa-plus"></i> Add In-Patient</a>
+                        <a href="add-edit-out_patient.php" class="btn btn btn-primary btn-rounded float-right"><i
+                                class="fa fa-plus"></i> Add Out-Patient</a>
                     </div>
                 </div>
                 <div class="row">
@@ -68,7 +68,7 @@ include("header.php");
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = mysqli_query($cnn, "select * from in_patient");
+                                    $query = mysqli_query($cnn, "select * from out_patient");
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_array($query)) {
                                         $query_patient = mysqli_query($cnn, "select * from patients where id=" . $row['patient_id'] . "");
@@ -98,7 +98,7 @@ include("header.php");
                                             $row['status'] = 'Discharge'; // Update status if d_date is expired
                                     
                                             // Update status in the database
-                                            $quer = "UPDATE in_patient SET status = '{$row['status']}' WHERE id = {$row['id']}";
+                                            $quer = "UPDATE out_patient SET status = '{$row['status']}' WHERE id = {$row['id']}";
                                             mysqli_query($cnn, $quer);
                                         }
 

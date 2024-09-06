@@ -53,7 +53,6 @@ if ($_GET['what'] == "admin_login") {
                 $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;'>Login successfully.</span>";
                 $response['role'] = $row_status['role'];
                 $_SESSION['admin'] = $row_status['email'];
-                $_SESSION['role'] = $row_status['role'];
             } else {
                 $response['success'] = false;
                 $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;'>Your account has been block.</span>";
@@ -83,7 +82,7 @@ if ($_GET['what'] == "getInsCityV") {
 if ($_GET['what'] == "getInBed") {
     $wardId = $_POST['wardId'];
     $response = [];
-    $query = mysqli_query($cnn, "SELECT bed_no FROM bed WHERE ward_id = " . $wardId);
+    $query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id = '" . $wardId . "'");
     while ($row = mysqli_fetch_assoc($query)) {
         array_push($response, $row);
     }
@@ -407,6 +406,47 @@ if ($_GET['what'] == "activeBed") {
     }
     echo json_encode($response);
 }
+// if ($_GET['what'] == "checkAndUpdateStatus") {
+//     $query = mysqli_query($cnn, "UPDATE b_patients SET status='Discharge' WHERE status='Admit' AND d_date < CURDATE()");
+
+//     if ($query) {
+//         $affected_rows = mysqli_affected_rows($cnn);
+//         $response['success'] = true;
+//         $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>$affected_rows patient(s) automatically discharged.</span>";
+
+//         // Fetch all patients with updated statuses
+//         $patient_query = mysqli_query($cnn, "SELECT id, status, d_date FROM b_patients");
+//         $response['patients'] = mysqli_fetch_all($patient_query, MYSQLI_ASSOC);
+//     } else {
+//         $response['success'] = false;
+//         $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error updating patient statuses.</span>";
+//     }
+
+//     echo json_encode($response);
+// }
+// if ($_GET['what'] == "checkAndUpdateStatus") {
+//     // Update all patients based on their d_date
+//     $update_query = mysqli_query($cnn, "UPDATE b_patients SET 
+//         status = CASE 
+//             WHEN d_date < CURDATE() THEN 'Discharge'
+//             ELSE 'Admit'
+//         END");
+
+//     if (!$update_query) {
+//         die('Update query failed: ' . mysqli_error($cnn));
+//     }
+
+//     $affected_rows = mysqli_affected_rows($cnn);
+
+//     $response['success'] = true;
+//     $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>$affected_rows patient(s) status updated.</span>";
+
+//     // Fetch all patients with updated statuses
+//     $patient_query = mysqli_query($cnn, "SELECT id, status, d_date FROM b_patients");
+//     $response['patients'] = mysqli_fetch_all($patient_query, MYSQLI_ASSOC);
+
+//     echo json_encode($response);
+// }
 
 
 ?>

@@ -39,7 +39,7 @@ if (
                     <div class="col-lg-8 offset-lg-2">
                         <?php
                         if (isset($_GET['id'])) {
-                            $query = mysqli_query($cnn, "select * from in_patient where id=" . $_GET['id'] . "");
+                            $query = mysqli_query($cnn, "select * from out_patient where id=" . $_GET['id'] . "");
                             $row = mysqli_fetch_array($query);
                         }
                         ?>
@@ -47,9 +47,9 @@ if (
                             <h2 class="h3  ">
                                 <?php
                                 if (isset($_GET['id'])) {
-                                    echo "Update In-Patients ";
+                                    echo "Update Out-Patients ";
                                 } else {
-                                    echo "Add In-Patients ";
+                                    echo "Add Out-Patients ";
                                 }
                                 ?>
                         </div>
@@ -227,10 +227,10 @@ if (
                                 }
 
                                 // Insert the data into the database
-                                $query = mysqli_query($cnn, "INSERT INTO in_patient ($cols) VALUES ($values)");
+                                $query = mysqli_query($cnn, "INSERT INTO out_patient ($cols) VALUES ($values)");
 
                                 if ($query) {
-                                    echo "<script>window.location.replace('in_patient.php');</script>";
+                                    echo "<script>window.location.replace('out_patient.php');</script>";
                                 } else {
                                     echo "<script>alert('Some error occurred. Please try again.');</script>";
                                 }

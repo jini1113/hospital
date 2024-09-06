@@ -38,11 +38,11 @@ include("header.php");
             <div class="content">
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h4 class="page-title">Appointments</h4>
+                        <h4 class="page-title">Bed-Patients</h4>
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-edit-b_patients.php" class="btn btn btn-primary btn-rounded float-right"><i
-                                class="fa fa-plus"></i> Add Appointment</a>
+                                class="fa fa-plus"></i> Add Bed-Patient</a>
                     </div>
                 </div>
                 <div class="row">
@@ -53,60 +53,51 @@ include("header.php");
                                     <tr>
                                         <th>No.</th>
                                         <th>Patient-Name</th>
-                                        <th>Email</th>
-                                        <th>Phone_No</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Doctor</th>
-                                        <th>Department</th>
-                                        <th>Message</th>
+                                        <th>Ward-Name</th>
+                                        <th>Bed No</th>
+                                        <th>Admit Date</th>
+                                        <th>Discharge Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = mysqli_query($cnn, "select * from appointment");
+                                    $query = mysqli_query($cnn, "select * from b_patients");
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_array($query)) {
                                         $query_patient = mysqli_query($cnn, "select * from patients where id=" . $row['patient_id'] . "");
                                         $row_patient = mysqli_fetch_array($query_patient);
 
-                                        $query_doc = mysqli_query($cnn, "select * from staff where role='Doctor'  AND  id=" . $row['doctor_id'] . " ");
-                                        $row_doc = mysqli_fetch_array($query_doc);
 
-                                        $query_dep = mysqli_query($cnn, "select * from department where id=" . $row['department_id'] . "");
-                                        $row_dep = mysqli_fetch_array($query_dep);
+                                        $query_ward = mysqli_query($cnn, "select * from ward where  id=" . $row['ward_id'] . " ");
+                                        $row_ward = mysqli_fetch_array($query_ward);
+
+                                        $query_bno = mysqli_query($cnn, "select * from bed where id=" . $row['bed_id'] . "");
+                                        $row_bno = mysqli_fetch_array($query_bno);
 
                                         echo "<tr>";
                                         echo "<td>" . $cnt . "</td>";
                                         echo "<td>" . $row_patient['name'] . "</td>";
-                                        echo "<td>" . $row['email'] . "</td>";
-                                        echo "<td>" . $row['phone_no'] . "</td>";
-                                        echo "<td>" . $row['date'] . "</td>";
-                                        echo "<td>" . $row['time'] . "</td>";
-                                        echo "<td>" . $row_doc['name'] . "</td>";
-                                        echo "<td>" . $row_dep['name'] . "</td>";
-                                        echo "<td>" . $row['message'] . "</td>";
-                                        if ($row['status'] == 'Active') {
-                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
-                                        } else {
+                                        echo "<td>" . $row_ward['name'] . "</td>";
+                                        echo "<td>" . $row_bno['bed_no'] . "</td>";
+                                        echo "<td>" . $row['a_date'] . "</td>";
+                                        echo "<td>" . $row['d_date'] . "</td>";
 
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active'  style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                        if (strtotime($row['d_date']) < time()) {
+                                            $row['status'] = 'Discharge'; // Update status if d_date is expired
+                                    
+                                            // Update status in the database
+                                            $quer = "UPDATE b_patients SET status = '{$row['status']}' WHERE id = {$row['id']}";
+                                            mysqli_query($cnn, $quer);
                                         }
-                                        // echo ' <td class="text-right">
-                                        //     <div class="dropdown dropdown-action">
-                                        //         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                        //             aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                        //         <div class="dropdown-menu dropdown-menu-right">
-                                        //             <a class="dropdown-item" href="edit-department.html"><i
-                                        //                     class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        //             <a class="dropdown-item" href="#" data-toggle="modal"
-                                        //                 data-target="#delete_department"><i
-                                        //                     class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                        //         </div>
-                                        //     </div>
-                                        // </td>';
+
+                                        if ($row['status'] == 'Admit') {
+                                            echo "<td><button type='button' class='btn custom-badge status-green active_block action-button' style='border-radius:4px;' data-id='" . $row['id'] . "'>Admit</button></td>";
+                                        } else {
+                                            echo "<td><button type='button' class='btn custom-badge status-red block_active action-button' style='border-radius:4px;' data-id='" . $row['id'] . "'>Discharge</button></td>";
+                                        }
+
                                         echo "<td><a href='add-edit-appointment.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                         // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";
