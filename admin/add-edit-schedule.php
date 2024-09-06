@@ -65,7 +65,7 @@ if (isset($_GET['id'])) {
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -98,10 +98,10 @@ if (isset($_GET['id'])) {
                                                     <option value="">Select Days</option>
                                                     <?php
                                                     $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                                                    foreach ($days as $day) {
-                                                        $selected = in_array($day, $availableDays) ? 'selected' : '';
-                                                        echo "<option value='$day' $selected>$day</option>";
-                                                    }
+                                                    // foreach ($days as $day) {
+                                                    //     $selected = in_array($day, $availableDays) ? 'selected' : '';
+                                                    //     echo "<option value='$day' $selected>$day</option>";
+                                                    // }
                                                     ?>
                                                 </select>
                                             </div>
@@ -140,6 +140,7 @@ if (isset($_GET['id'])) {
                                     </div>
                                 </form>
                             </div>
+                                    </div></div>
                             <!-- insert code -->
                             <?php
                             if (isset($_POST['btnSubmit'])) {
@@ -165,6 +166,7 @@ if (isset($_GET['id'])) {
                                     echo "<script>alert('Some error occurred. Please try again.');</script>";
                                 }
                             }
+                            
                             // update code
                             if (isset($_POST['btnUpdate'])) {
                                 $id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
