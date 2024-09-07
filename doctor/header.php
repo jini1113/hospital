@@ -172,7 +172,7 @@ include("../connection.php");
                 </a>
                 <div class="dropdown-menu p-3">
                     <!-- <a class="dropdown-item" href="profile.html">My Profile</a> -->
-                    <a class="dropdown-item p-2 " style="font-size:16px;" href="edit-profile.php"> <i
+                    <a class="dropdown-item p-2 " style="font-size:16px;" href="profile.php"> <i
                             class="fa fa-pencil-square-o mr-2" style="font-size:20px;font-weight:bold;"></i>Edit
                         Profile</a>
                     <a class="dropdown-item p-2" style="font-size:16px;" href="../changepwd.php"><i class="fa fa-lock mr-3"

@@ -127,22 +127,22 @@ if (
                         </div>
                         <div class="form-group">
                             <label><b style="color:#4a4998;">Old Password</b></label>
-                            <input type="password" id="txtOldPass" name="txtOldPass" class="form-control"  placeholder="**********">
-                            <span toggle="#txtOldPass" class="fa fa-fw fa-eye-slash field-icon toggle-oldpassword"></span>
+                            <input type="password" id="txtFCur" name="txtFCur" class="form-control"  placeholder="**********">
+                            <span toggle="#txtFCur" class="fa fa-fw fa-eye-slash field-icon toggle-oldpassword"></span>
                             <span id="errPass"></span>
                         </div>
                         <div class="input-icon-right">
                             <label><b style="color:#4a4998;">New Password</b></label>
-                            <input type="password" name="txtPass" id="txtPass" class="form-control form-control-lg mb-2"
+                            <input type="password" name="txtFNew" id="txtFNew" class="form-control form-control-lg mb-2"
                                     placeholder="**********" />
-                            <span toggle="#txtPass" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
+                            <span toggle="#txtFNew" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
                             <span id="errPass"></span>
                         </div><br>
                         <div class="input-icon-right">
                             <label><b style="color:#4a4998;">Confirm Password</b></label>
-                            <input type="password" name="txtConfirmPass" id="txtConfirmPass" class="form-control form-control-lg mb-2"
+                            <input type="password" name="txtFCon" id="txtFCon" class="form-control form-control-lg mb-2"
                                     placeholder="**********" />
-                                <span toggle="#txtConfirmPass" class="fa fa-fw fa-eye-slash field-icon toggle-confirmpassword"></span>
+                                <span toggle="#txtFCon" class="fa fa-fw fa-eye-slash field-icon toggle-confirmpassword"></span>
                             <span id="errPass"></span>
                         </div><br>
                         <!-- <div class="form-group  ">
@@ -151,7 +151,7 @@ if (
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group text-center">
-                                    <button type="submit" class="btn account-btn" name="txtSubmit" id="txtSubmit"
+                                    <button type="button" class="btn account-btn" id="changpwd" name="changpwd"
                                         style="background-color:#4a4998;color:#fff;">Change</button>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@ if (
                         <div class="col-md-6">
                         <div class="form-group text-center">
                             <button class="btn account-btn" id="cancelButton"
-                                style="background-color:#4a4998;color:#fff;">Cancel</button>
+                                style="background-color:#A8A7D5;color:#fff;">Cancel</button>
                         </div>
                         </div>
                     </div>
@@ -175,7 +175,6 @@ if (
     <script src="admin/assets/js/popper.min.js"></script>
     <script src="admin/assets/js/bootstrap.min.js"></script>
     <script src="admin/assets/js/app.js"></script>
-    <script src="newjs/login.js"></script>
     <script>
         $(document).ready(function() {
             $('#cancelButton').click(function() {
@@ -209,7 +208,8 @@ if (
                 input.attr("type", "password");
             }
         });
-    </script>
+        </script>
+    <script src="newjs/change_password.js"></script>
     <?php include("admin/included_js.php"); ?>
 </body>
 

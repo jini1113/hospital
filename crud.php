@@ -475,4 +475,67 @@ if ($_GET['what'] == "activeBed") {
 // }
 
 
+// chnage password 
+if ($_GET['what'] == "sendChangePwd") {
+    // Ensure required fields are present in $_POST
+    if (!isset($_POST['old']) || !isset($_POST['pwd'])) {
+        $response['success'] = false;
+        $response['message'] = "Missing old or new password.";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Sanitize and assign POST variables
+    $old = mysqli_real_escape_string($cnn, $_POST['old']);
+    $new_pwd = mysqli_real_escape_string($cnn, $_POST['pwd']);
+    $email = $_SESSION['admin'];
+
+    // Fetch user data based on email
+    $query_user = mysqli_query($cnn, "SELECT * FROM staff WHERE email='" . $email . "'");
+    
+    // Check if user exists and only one user is found
+    if ($query_user || mysqli_num_rows($query_user) != 1) {
+        $row_user = mysqli_fetch_array($query_user);
+
+        // Verify old password
+        if (!password_verify($old, $row_user['password'])) {
+            $response['success'] = false;
+            $response['message'] = "Old Password incorrect. Please try again.";
+            echo json_encode($response);
+            exit;
+        }
+    
+        // Hash new password
+        $pwd = password_hash($new_pwd, PASSWORD_DEFAULT);
+    
+        // Update password in database
+        $update_query = "UPDATE staff SET password='" . $pwd . "' WHERE email='" . $email . "'";
+        $query = mysqli_query($cnn, $update_query);
+    
+        if ($query) {
+            // Fetch role information
+            $response['role'] = $row_user['role']; // Assuming 'role' column stores role name directly
+    
+            $response['success'] = true;
+            $response['message'] = "Password updated successfully";
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Failed to update password. Please try again.";
+        }
+    
+
+       
+    }else{
+        $response['success'] = false;
+        $response['message'] = "User not found or multiple users found.";
+        echo json_encode($response);
+        exit;
+    }
+    
+   
+    // Return JSON response
+    echo json_encode($response);
+}
+
+
 ?>
