@@ -97,7 +97,7 @@ if (isset($_GET['id'])) {
                                                     //     echo ">" . $row_doctor['name'] . "</option>";
                                                     // }
                                                     ?>
-                                                </select> -->
+                                                </select> --> 
                                             </div>
                                         </div>
                                         <div class="col-6">

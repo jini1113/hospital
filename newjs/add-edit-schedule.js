@@ -22,6 +22,7 @@ $("#btnSubmit").click(function(event){
             txtTotime: $("#txtTotime").val(),
             txtMsg: $("#txtMsg").val()
         };
+        console.log(formData);
 
         $.ajax({
             type: "POST",

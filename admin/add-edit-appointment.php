@@ -129,7 +129,7 @@ if (
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <!-- <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Department</label>
                                             <select class="select" id="txtDep" name="txtDep">
@@ -150,7 +150,7 @@ if (
 
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -195,14 +195,14 @@ if (
                             $name = $_POST['txtPatient'];
                             $email = $_POST['txtMail'];
                             $phone = $_POST['txtPhone'];
-                            $department = $_POST['txtDep'];
+                            // $department = $_POST['txtDep'];
                             $doctor = $_POST['txtDoc'];
                             $date = $_POST['txtDate'];
                             $time = $_POST['txtTime'];
                             $msg = $_POST['txtMsg'];
 
-                            $cols = "patient_id,email,phone_no,date,time,doctor_id,department_id,message, status";
-                            $values = "'$name', '$email','$phone','$date','$time','$doctor','$department', '$msg','Active'";
+                            $cols = "patient_id,email,phone_no,date,time,doctor_id,message, status";
+                            $values = "'$name', '$email','$phone','$date','$time','$doctor','$msg','Active'";
                             $query = mysqli_query($cnn, "INSERT INTO appointment ($cols) VALUES ($values)");
 
                             if ($query) {

@@ -53,6 +53,7 @@ include("header.php");
                                 <thead>
                                     <tr>
                                         <th>No.</th>
+                                        <th>Image</th>
                                         <th>Role</th>
                                         <th>Department(Role)</th>
                                         <th>Name</th>
@@ -76,6 +77,7 @@ include("header.php");
 
                                         echo "<tr>";
                                         echo "<td>" . $cnt . "</td>";
+                                        echo "<td><img src='../image/" . $row['image'] . "'width='30%'/></td>";
                                         echo "<td>" . $row['role'] . "</td>";
                                         echo "<td>" . $row_dep['name'] . "</td>";
                                         echo "<td>" . $row['name'] . "</td>";

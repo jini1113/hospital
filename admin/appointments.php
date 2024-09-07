@@ -58,7 +58,6 @@ include("header.php");
                                         <th>Date</th>
                                         <th>Time</th>
                                         <th>Doctor</th>
-                                        <th>Department</th>
                                         <th>Message</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -75,9 +74,9 @@ include("header.php");
                                         $query_doc = mysqli_query($cnn, "select * from staff where role='Doctor'  AND  id=" . $row['doctor_id'] . " ");
                                         $row_doc = mysqli_fetch_array($query_doc);
 
-                                        $query_dep = mysqli_query($cnn, "select * from department where id=" . $row['department_id'] . "");
-                                        $row_dep = mysqli_fetch_array($query_dep);
-
+                                        // $query_dep = mysqli_query($cnn, "select * from department where id=" . $row['department_id'] . "");
+                                        // $row_dep = mysqli_fetch_array($query_dep);
+                                    
                                         echo "<tr>";
                                         echo "<td>" . $cnt . "</td>";
                                         echo "<td>" . $row_patient['name'] . "</td>";
@@ -86,7 +85,6 @@ include("header.php");
                                         echo "<td>" . $row['date'] . "</td>";
                                         echo "<td>" . $row['time'] . "</td>";
                                         echo "<td>" . $row_doc['name'] . "</td>";
-                                        echo "<td>" . $row_dep['name'] . "</td>";
                                         echo "<td>" . $row['message'] . "</td>";
                                         if ($row['status'] == 'Active') {
                                             echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
