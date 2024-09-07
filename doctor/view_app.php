@@ -38,24 +38,26 @@ include("header.php");
             <div class="content">
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h4 class="page-title">Doctor Schedule</h4>
+                        <h4 class="page-title">Appointment</h4>
                     </div>
-                    <div class="col-sm-8 col-9 text-right m-b-20">
+                    <!-- <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-edit-schedule.php" class="btn btn btn-primary btn-rounded float-right"><i
                                 class="fa fa-plus"></i> Add Schedule</a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_schedule">
+                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_app">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
                                         <th>Doctor Name</th>
-                                        <th>Days</th>
-                                        <th>From_Time</th>
-                                        <th>To_Time</th>
+                                        <th>Patient Name</th>
+                                        <th>Patient Email</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Patient Number</th>
                                         <th>Message</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -70,23 +72,29 @@ include("header.php");
                                    $row_user = mysqli_fetch_array($query_user);
                                    $doctor_id = $row_user['id'];
                                    
-                                   $query = mysqli_query($cnn, "SELECT * FROM d_schedule WHERE doctor_id='$doctor_id'");
+                                   $query = mysqli_query($cnn, "SELECT d.name AS doctor_name,p.name AS patient_name,p.email As patient_email,p.phone_no As patient_number,a.* FROM appointment AS a
+                                            JOIN
+                                                staff AS d ON a.doctor_id = d.id
+                                            JOIN
+                                                patients AS  p ON a.patient_id = p.id WHERE doctor_id='$doctor_id'");
                                    $cnt = 1;
                                    while ($row = mysqli_fetch_array($query)) {
                                        echo "<tr>";
                                        echo "<td>" . $cnt . "</td>";
                                        echo "<td>" . $row_user['name'] . "</td>"; // Use $row_user['name'] instead of querying again
-                                       echo "<td>" . $row['days'] . "</td>";
-                                       echo "<td>" . $row['from_time'] . "</td>";
-                                       echo "<td>" . $row['to_time'] . "</td>";
+                                       echo "<td>" . $row['patient_name'] . "</td>";
+                                       echo "<td>" . $row['patient_email'] . "</td>";
+                                       echo "<td>" . $row['date'] . "</td>";
+                                       echo "<td>" . $row['time'] . "</td>";
+                                       echo "<td>" . $row['patient_number'] . "</td>";
                                        echo "<td>" . $row['message'] . "</td>";
                                        if ($row['status'] == 'Active') {
                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
                                        } else {
                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
                                        }
-                                       echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
-                                       echo "<a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
+                                    //    echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
+                                       echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
 
                                        echo "</tr>";
                                        $cnt++;
@@ -97,7 +105,7 @@ include("header.php");
 
                                     </tr>
                                 </tbody>
-                                <!-- <tfoot>
+                                <tfoot>
                                     <tr>
                                         <th></th>
                                         <th></th>
@@ -109,9 +117,9 @@ include("header.php");
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
+                                        <!-- <th></th> -->
                                     </tr>
-                                </tfoot> -->
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -368,7 +376,7 @@ include("header.php");
     <script type="text/javascript" src="../newjs/schedule.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tbl_schedule').DataTable({
+            $('#tbl_app').DataTable({
                 "pageLength": 10,
                 "searching": true,
                 "language": {

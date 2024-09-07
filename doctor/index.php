@@ -223,7 +223,7 @@ if (
                         </ul>
                     </li> -->
                     <li>
-                        <a href="patients.php"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
+                        <a href="view_app.php"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
                     </li>
                     <li class="submenu">
                             <a href="#"><i class="	fa fa-tint"></i> <span>IPD/OPD</span> <span
