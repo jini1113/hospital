@@ -121,17 +121,86 @@ if ($_GET['what'] == "getUpBed") {
     $query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id=" . $id);
     $beds = [];
     while ($row = mysqli_fetch_array($query)) {
-        $beds[] = $row; // Collect beds in an array
+        $beds[] = [
+            "id" => $row['id'], // Make sure to fetch bed ID
+            "name" => $row['name'] // Make sure to fetch bed name
+        ];
     }
 
-    // Include the current bed ID and bed number in the response
+    // Include the current bed ID in the response
     $response = [
         "bed_id" => isset($row_select['bed_id']) ? $row_select['bed_id'] : null, // Ensure bed_id is set
-        "bed_number" => isset($row_select['bed_no']) ? $row_select['bed_no'] : null, // Fetch bed number
         "beds" => $beds
     ];
+
+    // Return the response as JSON
     echo json_encode($response);
 }
+// =============================================
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btnSubmit'])) {
+    $patient_id = mysqli_real_escape_string($cnn, $_POST['txtPatient']);
+    $ward_id = mysqli_real_escape_string($cnn, $_POST['txtWard']);
+    $bed_id = mysqli_real_escape_string($cnn, $_POST['txtBno']);
+    $a_date = mysqli_real_escape_string($cnn, $_POST['txtAdate']);
+    $d_date = mysqli_real_escape_string($cnn, $_POST['txtDate']);
+    $update_id = isset($_POST['txtUId']) ? mysqli_real_escape_string($cnn, $_POST['txtUId']) : null;
+
+    // Check if required fields are provided
+    if (!empty($patient_id) && !empty($ward_id)) {
+        if ($update_id) {
+            // Update existing patient record
+            $update_query = "UPDATE b_patients SET patient_id='$patient_id', ward_id='$ward_id', bed_id='" . (!empty($bed_id) ? $bed_id : '0') . "', a_date='$a_date', d_date='$d_date' WHERE id='$update_id'";
+            if (mysqli_query($cnn, $update_query)) {
+                echo "Patient updated successfully!";
+            } else {
+                echo "Error updating patient: " . mysqli_error($cnn);
+            }
+        } else {
+            // Prepare the insert query
+            $insert_query = "INSERT INTO b_patients (patient_id, ward_id, bed_id, a_date, d_date, status) 
+                             VALUES ('$patient_id', '$ward_id', '" . (!empty($bed_id) ? $bed_id : '0') . "', '$a_date', '$d_date', 'Admit')";
+            // Execute the query
+            if (mysqli_query($cnn, $insert_query)) {
+                echo "Patient added successfully!";
+            } else {
+                echo "Error adding patient: " . mysqli_error($cnn);
+            }
+        }
+    } else {
+        echo "Please ensure all required fields are filled.";
+    }
+}
+//==========================================================================================
+if ($_GET['what'] == "getUpBed") {
+    $id = $_POST['id']; // Ward ID
+    $main = $_POST['main']; // Patient ID
+    $response = [];
+
+    // Fetch the patient's current bed information
+    $query_select = mysqli_query($cnn, "SELECT * FROM b_patients WHERE id=" . $main);
+    $row_select = mysqli_fetch_array($query_select);
+
+    // Fetch beds for the selected ward
+    $query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id=" . $id);
+    $beds = [];
+    while ($row = mysqli_fetch_array($query)) {
+        $beds[] = [
+            "id" => $row['id'], // Make sure to fetch bed ID
+            "name" => $row['name'] // Make sure to fetch bed name
+        ];
+    }
+
+    // Include the current bed ID in the response
+    $response = [
+        "bed_id" => isset($row_select['bed_id']) ? $row_select['bed_id'] : null, // Ensure bed_id is set
+        "beds" => $beds
+    ];
+
+    // Return the response as JSON
+    echo json_encode($response);
+}
+// ====================================
+
 // active role
 if ($_GET['what'] == "blockDepartment") {
     // $name = $_POST['name'];

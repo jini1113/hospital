@@ -17,14 +17,11 @@ if (isset($_GET['id'])) {
 
     $current_bed_no = $patient_data['bed_id'];
     $current_ward = $patient_data['ward_id'];
-
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- add-appointment24:07-->
 
 <head>
     <meta charset="utf-8">
@@ -36,10 +33,7 @@ if (isset($_GET['id'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <!--[if lt IE 9]>
-        <script src="assets/js/html5shiv.min.js"></script>
-        <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
+
 </head>
 
 <body>
@@ -68,34 +62,25 @@ if (isset($_GET['id'])) {
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="POST" id="updateForm" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <input id="txtUId" name="txtUId" value="<?php if (isset($_GET['id'])) {
-                                                    echo $row['id'];
-                                                } ?>" hidden />
+                                                <input id="txtUId" name="txtUId" value="<?php echo $row['id']; ?>"
+                                                    hidden />
                                                 <label>Patient Name</label>
                                                 <select class="select" id="txtPatient" name="txtPatient">
                                                     <option value="">Select</option>
                                                     <?php
-                                                    $query_patient = mysqli_query($cnn, "SELECT * FROM patients");
-                                                    while ($row_patient = mysqli_fetch_array($query_patient)) {
-                                                        echo "<option value='" . $row_patient['id'] . "'";
-                                                        if (isset($_GET['id'])) {
-                                                            // Assuming $row is defined earlier and contains the data of the item being edited
-                                                            if ($row['patient_id'] == $row_patient['id']) {
-                                                                echo " selected";
-                                                            }
-                                                        }
-                                                        echo ">" . $row_patient['name'] . "</option>";
+                                                    $patient_query = mysqli_query($cnn, "SELECT * FROM patients");
+                                                    while ($patient = mysqli_fetch_array($patient_query)) {
+                                                        $selected = ($current_patient == $patient['id']) ? "selected" : "";
+                                                        echo "<option value='" . $patient['id'] . "' $selected>" . $patient['name'] . "</option>";
                                                     }
                                                     ?>
-
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label>Ward</label>
@@ -111,112 +96,55 @@ if (isset($_GET['id'])) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-6">
                                             <div class="form-group">
                                                 <label>Bed No.</label>
                                                 <select id="txtBno" name="txtBno" class="form-control">
                                                     <option value="">Select</option>
+                                                    <?php
+                                                    if (isset($current_bed_id)) {
+                                                        $bed_query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id=" . $current_ward);
+                                                        while ($bed = mysqli_fetch_array($bed_query)) {
+                                                            $selected = ($current_bed_id == $bed['id']) ? "selected" : "";
+                                                            echo "<option value='" . $bed['id'] . "' $selected>" . $bed['name'] . "</option>";
+                                                        }
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="row">
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Admit-Date</label>
                                                 <input type="date" class="form-control" id="txtAdate" name="txtAdate"
-                                                    value="<?php if (isset($_GET['id'])) {
-                                                        echo $row['a_date'];
-                                                    } ?>">
-
+                                                    value="<?php echo $row['a_date']; ?>">
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Discharge-Date</label>
                                                 <input type="date" class="form-control" id="txtDate" name="txtDate"
-                                                    value="<?php if (isset($_GET['id'])) {
-                                                        echo $row['d_date'];
-                                                    } ?>">
-
+                                                    value="<?php echo $row['d_date']; ?>">
                                             </div>
                                         </div>
                                     </div>
 
-
-
+                                    <!-- <div class="m-t-20 text-center">
+                                            <button type="submit"
+                                                name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
+                                                id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
+                                                class="btn btn-primary submit-btn">Save
+                                            </button>
+                                        </div> -->
                                     <div class="m-t-20 text-center">
-                                        <button type="submit"
-                                            name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
-                                            id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
-                                            class="btn btn-primary submit-btn">Save
-                                        </button>
+                                        <button type="submit" name="btnSubmit"
+                                            class="btn btn-primary submit-btn">Save</button>
                                     </div>
                                 </form>
                             </div>
-                            <!-- insert code -->
-                            <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $patient = $_POST['txtPatient'];
-                                $bed_no = $_POST['txtBno'];
-                                $ward = $_POST['txtWard'];
-                                $a_date = $_POST['txtAdate'];
-                                $d_date = $_POST['txtDate'];
-
-
-                                $cols = "patient_id,ward_id,a_date,d_date,status";
-                                $values = "'$patient','$ward','$a_date','$d_date','Admit'";
-
-                                if (!empty($bed_no)) {
-                                    $cols .= ", bed_id";
-                                    $values .= ", '" . $bed_no . "'";
-                                } else {
-                                    $cols .= ", bed_id";
-                                    $values .= ", '0'";
-                                }
-
-                                $query = mysqli_query($cnn, "INSERT INTO b_patients ($cols) VALUES ($values)");
-
-                                if ($query) {
-                                    echo "<script>window.location.replace('b_patients.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                }
-                            }
-                            // update code
-                            if (isset($_POST['btnUpdate'])) {
-                                $id = $_POST['txtUId'];
-                                $patient = $_POST['txtPatient'];
-                                $bed_no = $_POST['txtBno'];
-                                $ward = $_POST['txtWard'];
-                                $a_date = $_POST['txtAdate'];
-                                $d_date = $_POST['txtDate'];
-
-                                // Initialize $cols for the update query
-                                $cols = ""; // Ensure $cols is initialized
-                            
-                                // Check if bed_no is provided
-                                if (!empty($bed_no)) {
-                                    $cols .= "bed_id=" . $bed_no . ", "; // Use $bed_no instead of $city
-                                } else {
-                                    $cols .= "bed_id='0', ";
-                                }
-
-                                // Add other fields to the update query
-                                $cols .= "patient_id='" . $patient . "', ward_id='" . $ward . "', a_date='" . $a_date . "', d_date='" . $d_date . "'";
-
-                                // Execute the update query
-                                $query = mysqli_query($cnn, "UPDATE b_patients SET " . rtrim($cols, ', ') . " WHERE id=" . $id);
-                                if ($query > 0) {
-                                    echo "<script>window.location.replace('b_patients.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again');</script>";
-                                }
-                            }
-                            ?>
                         </div>
                     </div>
                     <div class="notification-box">
