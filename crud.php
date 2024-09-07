@@ -605,6 +605,60 @@ if ($_GET['what'] == "sendChangePwd") {
     // Return JSON response
     echo json_encode($response);
 }
+// add schedule
+if ($_GET['what'] == "addschedule") {
+    // Sanitize inputs
+    $doctor_id = mysqli_real_escape_string($cnn, $_POST['txtDoc']);
+    $days = isset($_POST['txtDays']) ? implode(", ", $_POST['txtDays']) : '';
+    $from_time = mysqli_real_escape_string($cnn, $_POST['txtFtime']);
+    $to_time = mysqli_real_escape_string($cnn, $_POST['txtTotime']);
+    $message = mysqli_real_escape_string($cnn, $_POST['txtMsg']);
+
+    // Construct the query
+    $query = "INSERT INTO d_schedule (doctor_id, days, from_time, to_time, message, status) 
+              VALUES ('$doctor_id', '$days', '$from_time', '$to_time', '$message', 'Active')";
+
+    // Execute the query
+    if (mysqli_query($cnn, $query)) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Record inserted successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error: " . mysqli_error($cnn) . "</span>";
+    }
+
+    echo json_encode($response);
+}
+// add schedule
+if ($_GET['what'] == "updateschedule") {
+    // Sanitize inputs
+    $schedule_id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
+    $doctor_id = mysqli_real_escape_string($cnn, $_POST['txtDoc']);
+    $days = isset($_POST['txtDays']) ? implode(", ", $_POST['txtDays']) : '';
+    $from_time = mysqli_real_escape_string($cnn, $_POST['txtFtime']);
+    $to_time = mysqli_real_escape_string($cnn, $_POST['txtTotime']);
+    $message = mysqli_real_escape_string($cnn, $_POST['txtMsg']);
+
+    // Construct the update query
+    $query = "UPDATE d_schedule SET 
+                doctor_id = '$doctor_id', 
+                days = '$days', 
+                from_time = '$from_time', 
+                to_time = '$to_time', 
+                message = '$message'
+              WHERE id = '$schedule_id'";
+
+    // Execute the query
+    if (mysqli_query($cnn, $query)) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Schedule updated successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error: " . mysqli_error($cnn) . "</span>";
+    }
+
+    echo json_encode($response);
+}
 
 
 ?>

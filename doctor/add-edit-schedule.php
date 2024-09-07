@@ -65,30 +65,39 @@ if (isset($_GET['id'])) {
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="POST" id="frm">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <input id="txtUId" name="txtUId" value="<?php if (isset($_GET['id'])) {
                                                     echo $row['id'];
                                                 } ?>" hidden />
+                                              <?php
+                                                $query_doctor = mysqli_query($cnn, "SELECT * FROM staff WHERE email='" . $_SESSION['admin'] . "'");
+                                                $row_doctor = mysqli_fetch_array($query_doctor);
+                                            ?>
+                                            <div class="form-group">
                                                 <label>Doctor</label>
-                                                <select class="select" id="txtDoc" name="txtDoc">
+                                                <input type="text" class="form-control" value="<?php echo $row_doctor['name']; ?>" readonly>
+                                                <input type="hidden" id="txtDoc" name="txtDoc" value="<?php echo $row_doctor['id']; ?>">
+                                            </div>
+                                                
+                                                <!-- <select class="select" id="txtDoc" name="txtDoc">
                                                     <option value="">Select</option>
                                                     <?php
-                                                    $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
-                                                    while ($row_doctor = mysqli_fetch_array($query_doctor)) {
-                                                        echo "<option value='" . $row_doctor['id'] . "'";
-                                                        if (isset($_GET['id'])) {
-                                                            // Assuming $row is defined earlier and contains the data of the item being edited
-                                                            if ($row['doctor_id'] == $row_doctor['id']) {
-                                                                echo " selected";
-                                                            }
-                                                        }
-                                                        echo ">" . $row_doctor['name'] . "</option>";
-                                                    }
+                                                    // $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
+                                                    // while ($row_doctor = mysqli_fetch_array($query_doctor)) {
+                                                    //     echo "<option value='" . $row_doctor['id'] . "'";
+                                                    //     if (isset($_GET['id'])) {
+                                                    //         // Assuming $row is defined earlier and contains the data of the item being edited
+                                                    //         if ($row['doctor_id'] == $row_doctor['id']) {
+                                                    //             echo " selected";
+                                                    //         }
+                                                    //     }
+                                                    //     echo ">" . $row_doctor['name'] . "</option>";
+                                                    // }
                                                     ?>
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -132,7 +141,7 @@ if (isset($_GET['id'])) {
                                         } ?></textarea>
                                     </div>
                                     <div class="m-t-20 text-center">
-                                        <button type="submit"
+                                        <button type="button"
                                             name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             class="btn btn-primary submit-btn">Save
@@ -142,59 +151,59 @@ if (isset($_GET['id'])) {
                             </div>
                             <!-- insert code -->
                             <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $doctor = $_POST['txtDoc'];
-                                $days = implode(", ", $_POST['txtDays']);
-                                $from = date('H:i', strtotime($_POST['txtFtime']));
-                                $to = date('H:i', strtotime($_POST['txtTotime']));
-                                $msg = $_POST['txtMsg'];
+                            // if (isset($_POST['btnSubmit'])) {
+                            //     $doctor = $_POST['txtDoc'];
+                            //     $days = implode(", ", $_POST['txtDays']);
+                            //     $from = date('H:i', strtotime($_POST['txtFtime']));
+                            //     $to = date('H:i', strtotime($_POST['txtTotime']));
+                            //     $msg = $_POST['txtMsg'];
 
 
 
-                                $cols = "doctor_id,days,from_time,to_time,message,status";
-                                $values = "'$doctor','$days', '$from', '$to','$msg','Active'";
+                            //     $cols = "doctor_id,days,from_time,to_time,message,status";
+                            //     $values = "'$doctor','$days', '$from', '$to','$msg','Active'";
 
 
 
 
-                                $query = mysqli_query($cnn, "INSERT INTO d_schedule ($cols) VALUES ($values)");
+                            //     $query = mysqli_query($cnn, "INSERT INTO d_schedule ($cols) VALUES ($values)");
 
-                                if ($query) {
-                                    echo "<script>window.location.replace('schedule.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                }
-                            }
-                            // update code
-                            if (isset($_POST['btnUpdate'])) {
-                                $id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
-                                $doctor = mysqli_real_escape_string($cnn, $_POST['txtDoc']);
+                            //     if ($query) {
+                            //         echo "<script>window.location.replace('schedule.php');</script>";
+                            //     } else {
+                            //         echo "<script>alert('Some error occurred. Please try again.');</script>";
+                            //     }
+                            // }
+                            // // update code
+                            // if (isset($_POST['btnUpdate'])) {
+                            //     $id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
+                            //     $doctor = mysqli_real_escape_string($cnn, $_POST['txtDoc']);
 
-                                // Check if txtDays is set and is an array
-                                if (isset($_POST['txtDays']) && is_array($_POST['txtDays'])) {
-                                    $days = implode(", ", $_POST['txtDays']);
-                                } else {
-                                    $days = ""; // Set to empty string if no days are selected
-                                }
+                            //     // Check if txtDays is set and is an array
+                            //     if (isset($_POST['txtDays']) && is_array($_POST['txtDays'])) {
+                            //         $days = implode(", ", $_POST['txtDays']);
+                            //     } else {
+                            //         $days = ""; // Set to empty string if no days are selected
+                            //     }
 
-                                $from = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtFtime'])));
-                                $to = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtTotime'])));
-                                $msg = mysqli_real_escape_string($cnn, $_POST['txtMsg']);
+                            //     $from = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtFtime'])));
+                            //     $to = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtTotime'])));
+                            //     $msg = mysqli_real_escape_string($cnn, $_POST['txtMsg']);
 
-                                $query = mysqli_query($cnn, "UPDATE d_schedule SET 
-                                    doctor_id = '$doctor',
-                                    days = '$days',
-                                    from_time = '$from',
-                                    to_time = '$to',
-                                    message = '$msg'
-                                    WHERE id = '$id'");
+                            //     $query = mysqli_query($cnn, "UPDATE d_schedule SET 
+                            //         doctor_id = '$doctor',
+                            //         days = '$days',
+                            //         from_time = '$from',
+                            //         to_time = '$to',
+                            //         message = '$msg'
+                            //         WHERE id = '$id'");
 
-                                if ($query) {
-                                    echo "<script>window.location.replace('schedule.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again');</script>";
-                                }
-                            }
+                            //     if ($query) {
+                            //         echo "<script>window.location.replace('schedule.php');</script>";
+                            //     } else {
+                            //         echo "<script>alert('Some error occurred. Please try again');</script>";
+                            //     }
+                            // }
                             ?>
                         </div>
                     </div>
@@ -454,6 +463,8 @@ if (isset($_GET['id'])) {
                     });
                 });
             </script>
+             <?php include("../admin/included_js.php"); ?>
+             <script src="../newjs/add-edit-schedule.js"></script> 
 </body>
 
 
