@@ -1,3 +1,5 @@
+
+
 $("#txtWard").on("change", function () {
     const wardId = $(this).val();
     $.ajax({

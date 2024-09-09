@@ -720,4 +720,159 @@ if ($_GET['what'] == "block_App") {
     }
     echo json_encode($response);
 }
+// in patient add
+if ($_GET['what'] == "in_patientadd") {
+
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $surgery = $_POST['top'];
+    $surgery_name = $_POST['txtSurname'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+   
+
+    $cols = "patient_id,doctor_id,ward_id,a_date,d_date,a_time,d_time,hours,disease,surgery,surgery_name,status";
+    $values = "'$patient','$doctor','$ward','$a_date','$d_date','$a_time','$d_time','$hour','$disease','$surgery','$surgery_name','Admit'";
+
+    if (!empty($bed_no)) {
+        $cols .= ", bed_id";
+        $values .= ", '" . $bed_no . "'";
+    } else {
+        $cols .= ", bed_id";
+        $values .= ", '0'";
+    }
+
+    $query = mysqli_query($cnn, "INSERT INTO in_patient ($cols) VALUES ($values)");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record inserted successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// in patient update
+if ($_GET['what'] == "inpatientupdate") {
+    $id = $_POST['txtUId'];
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $surgery = $_POST['top'];
+    $surgery_name = $_POST['txtSurname'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+    $query = mysqli_query($cnn, "UPDATE in_patient SET 
+        patient_id = '$patient', 
+        doctor_id = '$doctor', 
+        bed_id = '$bed_no', 
+        ward_id = '$ward', 
+        a_date = '$a_date', 
+        d_date = '$d_date', 
+        a_time = '$a_time', 
+        d_time = '$d_time', 
+        hours = '$hour', 
+        disease = '$disease', 
+        surgery = '$surgery', 
+        surgery_name = '$surgery_name'
+    WHERE id = '$id'");
+
+    if ($query > 0) {
+        $response['success'] = true;    
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record updated successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+
+    echo json_encode($response);
+}
+// Out patient add
+if ($_GET['what'] == "out_patientadd") {
+
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+   
+
+    $cols = "patient_id,doctor_id,ward_id,a_date,d_date,a_time,d_time,hours,disease,status";
+    $values = "'$patient','$doctor','$ward','$a_date','$d_date','$a_time','$d_time','$hour','$disease','Admit'";
+
+    if (!empty($bed_no)) {
+        $cols .= ", bed_id";
+        $values .= ", '" . $bed_no . "'";
+    } else {
+        $cols .= ", bed_id";
+        $values .= ", '0'";
+    }
+
+    $query = mysqli_query($cnn, "INSERT INTO out_patient ($cols) VALUES ($values)");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record inserted successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// out patient update
+if ($_GET['what'] == "outpatientupdate") {
+    $id = $_POST['txtUId'];
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+    $query = mysqli_query($cnn, "UPDATE out_patient SET 
+        patient_id = '$patient', 
+        doctor_id = '$doctor', 
+        bed_id = '$bed_no', 
+        ward_id = '$ward', 
+        a_date = '$a_date', 
+        d_date = '$d_date', 
+        a_time = '$a_time', 
+        d_time = '$d_time', 
+        hours = '$hour', 
+        disease = '$disease'
+    WHERE id = '$id'");     
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record Updated successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
 ?>

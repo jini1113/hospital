@@ -1,7 +1,7 @@
 <?php
 include("../connection.php");
 include("header.php");
-// session_start();
+session_start();
 if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
     $_SESSION["admin"] == ""
@@ -18,13 +18,13 @@ if (
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../admin/assets/img/favicon.ico">
     <title>Hospital Management System</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/style.css">
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>
@@ -39,17 +39,17 @@ if (
                     <div class="col-lg-8 offset-lg-2">
                         <?php
                         if (isset($_GET['id'])) {
-                            $query = mysqli_query($cnn, "select * from in_patient where id=" . $_GET['id'] . "");
+                            $query = mysqli_query($cnn, "select * from out_patient where id=" . $_GET['id'] . "");
                             $row = mysqli_fetch_array($query);
                         }
                         ?>
                         <div class="title ">
-                            <h2 class="h3">
+                            <h2 class="h3  ">
                                 <?php
                                 if (isset($_GET['id'])) {
-                                    echo "Update In-Patients ";
+                                    echo "Update Out-Patients ";
                                 } else {
-                                    echo "Add In-Patients ";
+                                    echo "Add Out-Patients ";
                                 }
                                 ?>
                         </div>
@@ -84,27 +84,32 @@ if (
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <?php
+                                                $query_doctor = mysqli_query($cnn, "SELECT * FROM staff WHERE email='" . $_SESSION['admin'] . "'");
+                                                $row_doctor = mysqli_fetch_array($query_doctor);
+                                            ?>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Doctor</label>
-                                                <select class="select" id="txtDoc" name="txtDoc">
+                                                <input type="text" class="form-control" value="<?php echo $row_doctor['name']; ?>" readonly>
+                                                <input type="hidden" id="txtDoc" name="txtDoc" value="<?php echo $row_doctor['id']; ?>">
+                                                <!-- <select class="select" id="txtDoc" name="txtDoc">
                                                     <option value="">Select</option>
                                                     <?php
-                                                    $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
-                                                    while ($row_doctor = mysqli_fetch_array($query_doctor)) {
-                                                        echo "<option value='" . $row_doctor['id'] . "'";
-                                                        if (isset($_GET['id'])) {
-                                                            // Assuming $row is defined earlier and contains the data of the item being edited
-                                                            if ($row['doctor_id'] == $row_doctor['id']) {
-                                                                echo " selected";
-                                                            }
-                                                        }
-                                                        echo ">" . $row_doctor['name'] . "</option>";
-                                                    }
+                                                    // $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
+                                                    // while ($row_doctor = mysqli_fetch_array($query_doctor)) {
+                                                    //     echo "<option value='" . $row_doctor['id'] . "'";
+                                                    //     if (isset($_GET['id'])) {
+                                                    //         // Assuming $row is defined earlier and contains the data of the item being edited
+                                                    //         if ($row['doctor_id'] == $row_doctor['id']) {
+                                                    //             echo " selected";
+                                                    //         }
+                                                    //     }
+                                                    //     echo ">" . $row_doctor['name'] . "</option>";
+                                                    // }
                                                     ?>
 
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
 
@@ -138,9 +143,7 @@ if (
                                                 } ?>" placeholder="Enter Disease">
                                             </div>
                                         </div>
-                                        
                                     </div>
-                                    
 
                                     <div class="row">
                                     </div>
@@ -185,7 +188,7 @@ if (
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Number of Hours <span class="text-danger">*</span></label>
                                                 <input class="form-control" readonly type="text" id="txtHour"
@@ -194,47 +197,6 @@ if (
                                                     } ?>">
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Surgery</label><br>
-                                            <input type="radio" name="surgery" value="Yes" <?php if (isset($_GET['id']) && $row['surgery'] == "Yes") echo " checked"; ?> id="surgery_yes"><b style="margin-left: 10px;">Yes</b><br>
-                                            <input type="radio" name="surgery" value="No" <?php if (isset($_GET['id']) && $row['surgery'] == "No") echo " checked"; ?> id="surgery_no"><b style="margin-left: 10px;">No</b> 
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5" id="surgery_field" style="display: none;">
-                                        <div class="form-group">
-                                            <label>Surgery Name</label><br>
-                                            <input type="text" class="form-control" id="txtSurname" name="txtSurname" value="<?php if (isset($_GET['id'])) echo $row['surgery_name']; ?>" placeholder="Enter Surgery Name">
-                                        </div>
-                                    </div>
-
-                                    <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        var surgeryYes = document.getElementById('surgery_yes');
-                                        var surgeryNo = document.getElementById('surgery_no');
-                                        var surgeryField = document.getElementById('surgery_field');
-                                        var txtSurname = document.getElementById('txtSurname');
-
-                                        function toggleSurgeryField() {
-                                            if (surgeryYes.checked) {
-                                                surgeryField.style.display = 'block';
-                                            } else {
-                                                surgeryField.style.display = 'none';
-                                                txtSurname.value = '';
-                                            }
-                                        }
-
-                                        if (surgeryYes && surgeryNo && surgeryField && txtSurname) {
-                                            surgeryYes.addEventListener('click', toggleSurgeryField);
-                                            surgeryNo.addEventListener('click', toggleSurgeryField);
-
-                                            // Check initial state
-                                            toggleSurgeryField();
-                                        } else {
-                                            console.error('Some elements are missing');
-                                        }
-                                    });
-                                    </script>
                                     </div>
 
 
@@ -247,7 +209,6 @@ if (
                                     </div>
                                 </form>
                             </div>
-                            
                         </div>
                     </div>
                     <div class="notification-box">
@@ -489,16 +450,16 @@ if (
                 </div>
             </div>
             <div class="sidebar-overlay" data-reff=""></div>
-            <script src="assets/js/jquery-3.2.1.min.js"></script>
-            <script src="assets/js/popper.min.js"></script>
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script src="assets/js/jquery.slimscroll.js"></script>
-            <script src="assets/js/select2.min.js"></script>
-            <script src="assets/js/app.js"></script>
-            <script src="assets/js/moment.min.js"></script>
-            <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-            <?php include("included_js.php"); ?>
-            <script src="../newjs/in_patients.js"></script>
+            <script src="../admin/assets/js/jquery-3.2.1.min.js"></script>
+            <script src="../admin/assets/js/popper.min.js"></script>
+            <script src="../admin/assets/js/bootstrap.min.js"></script>
+            <script src="../admin/assets/js/jquery.slimscroll.js"></script>
+            <script src="../admin/assets/js/select2.min.js"></script>
+            <script src="../admin/assets/js/app.js"></script>
+            <script src="../admin/assets/js/moment.min.js"></script>
+            <script src="../admin/assets/js/bootstrap-datetimepicker.min.js"></script>
+            <?php include("../admin/included_js.php"); ?>
+            <script src="../newjs/out_patients_doctor.js"></script>
             <script>
                 function calculateHours() {
                     const admitDate = document.getElementById('txtAdate').value;

@@ -53,10 +53,10 @@ include("header.php");
                         <h4 class="page-title">OPD Patients</h4>
                     </div>
                    
-                    <!-- <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-edit-schedule.php" class="btn btn btn-primary btn-rounded float-right"><i
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="add-edit-out_patient.php" class="btn btn btn-primary btn-rounded float-right"><i
                                 class="fa fa-plus"></i> Add Schedule</a>
-                    </div> -->
+                    </div>
                 </div>
                 <div>
                 <table class="travel_tbl">
@@ -131,6 +131,18 @@ include("header.php");
                                        echo "<td>" . $row['a_time'] . "</td>";
                                        echo "<td>" . $row['d_time'] . "</td>";
                                        echo "<td>" . $row['hours'] . "</td>";
+                                       if (strtotime($row['d_date']) < time()) {
+                                        $row['status'] = 'Discharge'; // Update status if d_date is expired
+                                
+                                        // Update status in the database
+                                        $quer = "UPDATE in_patient SET status = '{$row['status']}' WHERE id = {$row['id']}";
+                                        mysqli_query($cnn, $quer);
+                                    }
+                                       if ($row['status'] == 'Discharge') {
+                                           echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-red active_block' style='border-radius:4px;' data-id=" . $row['id'] . " hidden>Discharge</button></td>";
+                                        } else {
+                                        
+                                       }
                                     //    if ($row['status'] == 'Active') {
                                     //        echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
                                     //     } else {
@@ -231,6 +243,18 @@ include("header.php");
                                        echo "<td>" . $row['a_time'] . "</td>";
                                        echo "<td>" . $row['d_time'] . "</td>";
                                        echo "<td>" . $row['hours'] . "</td>";
+                                       if (strtotime($row['d_date']) < time()) {
+                                        $row['status'] = 'Discharge'; // Update status if d_date is expired
+                                
+                                        // Update status in the database
+                                        $quer = "UPDATE in_patient SET status = '{$row['status']}' WHERE id = {$row['id']}";
+                                        mysqli_query($cnn, $quer);
+                                    }
+                                       if ($row['status'] == 'Discharge') {
+                                           echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . " hidden>Admit</button></td>";
+                                        } else {
+                                        
+                                       }
                                     //    echo "<td>" . $row['message'] . "</td>";
                                     //    if ($row['status'] == 'Pending') {
                                     //        echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Approved</button></td>";

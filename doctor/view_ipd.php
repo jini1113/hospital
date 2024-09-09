@@ -53,10 +53,10 @@ include("header.php");
                         <h4 class="page-title">IPD Patients</h4>
                     </div>
                    
-                    <!-- <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="add-edit-schedule.php" class="btn btn btn-primary btn-rounded float-right"><i
-                                class="fa fa-plus"></i> Add Schedule</a>
-                    </div> -->
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="add-edit-in_patient.php" class="btn btn btn-primary btn-rounded float-right"><i
+                                class="fa fa-plus"></i> Add In-Patient</a>
+                    </div>
                 </div>
                 <div>
                 <table class="travel_tbl">
@@ -85,6 +85,7 @@ include("header.php");
                                         <th>Admit Time</th>
                                         <th>Discharge Time</th>
                                         <th>Hours</th>
+                                       
                                        
                                     </tr>
                                 </thead>
@@ -131,12 +132,18 @@ include("header.php");
                                        echo "<td>" . $row['a_time'] . "</td>";
                                        echo "<td>" . $row['d_time'] . "</td>";
                                        echo "<td>" . $row['hours'] . "</td>";
-                                    //    if ($row['status'] == 'Active') {
-                                    //        echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
-                                    //     } else {
-                                    //        echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                       if (strtotime($row['d_date']) < time()) {
+                                        $row['status'] = 'Discharge'; // Update status if d_date is expired
+                                
+                                        // Update status in the database
+                                        $quer = "UPDATE in_patient SET status = '{$row['status']}' WHERE id = {$row['id']}";
+                                        mysqli_query($cnn, $quer);
+                                    }
+                                       if ($row['status'] == 'Discharge') {
+                                           echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-red active_block' style='border-radius:4px;' data-id=" . $row['id'] . " hidden>Discharge</button></td>";
+                                        } else {
                                         
-                                    //    }
+                                       }
                                     //    echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
                                     //    echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
 
@@ -186,7 +193,8 @@ include("header.php");
                                         <th>Admit Time</th>
                                         <th>Discharge Time</th>
                                         <th>Hours</th>
-                                       
+                                        <th>Action</th>
+
                                         <!-- <th>fgt</th> -->
                                     </tr>
                                 </thead>
@@ -231,6 +239,8 @@ include("header.php");
                                        echo "<td>" . $row['a_time'] . "</td>";
                                        echo "<td>" . $row['d_time'] . "</td>";
                                        echo "<td>" . $row['hours'] . "</td>";
+                                        echo "<td><a href='add-edit-in_patient.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
+                                        <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                     //    echo "<td>" . $row['message'] . "</td>";
                                     //    if ($row['status'] == 'Pending') {
                                     //        echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Approved</button></td>";
@@ -240,6 +250,19 @@ include("header.php");
                                     //    }
                                     //    echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
                                     //    echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
+                                    if (strtotime($row['d_date']) < time()) {
+                                        $row['status'] = 'Discharge'; // Update status if d_date is expired
+                                
+                                        // Update status in the database
+                                        $quer = "UPDATE in_patient SET status = '{$row['status']}' WHERE id = {$row['id']}";
+                                        mysqli_query($cnn, $quer);
+                                    }
+
+                                    if ($row['status'] == 'Admit') {
+                                        echo "<td><button type='button' class='btn custom-badge status-green active_block action-button' style='border-radius:4px;' data-id='" . $row['id'] . "' hidden>Admit</button></td>";
+                                    } else {
+
+                                    }
 
                                        echo "</tr>";
                                        $cnt++;

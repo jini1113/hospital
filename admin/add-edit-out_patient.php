@@ -57,7 +57,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -130,6 +130,14 @@ if (
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Disease</label>
+                                                <input type="text" class="form-control" id="txtDis" name="txtDis" value="<?php if (isset($_GET['id'])) {
+                                                    echo $row['disease'];
+                                                } ?>" placeholder="Enter Disease">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -179,14 +187,16 @@ if (
                                             <div class="form-group">
                                                 <label>Number of Hours <span class="text-danger">*</span></label>
                                                 <input class="form-control" readonly type="text" id="txtHour"
-                                                    name="txtHour">
+                                                    name="txtHour" value="<?php if (isset($_GET['id'])) {
+                                                        echo $row['hours'];
+                                                    } ?>">
                                             </div>
                                         </div>
                                     </div>
 
 
                                     <div class="m-t-20 text-center">
-                                        <button type="submit"
+                                        <button type="button"
                                             name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             class="btn btn-primary submit-btn">Save
@@ -194,72 +204,6 @@ if (
                                     </div>
                                 </form>
                             </div>
-                            <!-- insert code -->
-                            <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $patient = $_POST['txtPatient'];
-                                $doctor = $_POST['txtDoc'];
-                                $bed_no = $_POST['txtBno'];
-                                $ward = $_POST['txtWard'];
-                                $a_date = $_POST['txtAdate'];
-                                $d_date = $_POST['txtDate'];
-                                $a_time = $_POST['txtAtime'];
-                                $d_time = $_POST['txtTime'];
-
-                                // Calculate the number of hours
-                                $startDateTime = new DateTime("$a_date $a_time");
-                                $endDateTime = new DateTime("$d_date $d_time");
-                                $interval = $startDateTime->diff($endDateTime);
-                                $hour = $interval->h + ($interval->days * 24); // Total hours
-                            
-                                // Set the value of txtHour directly
-                                echo "<script>document.getElementById('txtHour').value = '$hour';</script>";
-
-                                $cols = "patient_id,doctor_id,ward_id,a_date,d_date,a_time,d_time,hours,status";
-                                $values = "'$patient','$doctor','$ward','$a_date','$d_date','$a_time','$d_time','$hour','Admit'";
-
-                                if (!empty($bed_no)) {
-                                    $cols .= ", bed_id";
-                                    $values .= ", '" . $bed_no . "'";
-                                } else {
-                                    $cols .= ", bed_id";
-                                    $values .= ", '0'";
-                                }
-
-                                // Insert the data into the database
-                                $query = mysqli_query($cnn, "INSERT INTO out_patient ($cols) VALUES ($values)");
-
-                                if ($query) {
-                                    echo "<script>window.location.replace('out_patient.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                }
-                            }
-                            // update code
-                            // if (isset($_POST['btnUpdate'])) {
-                            //     $id = $_POST['txtUId'];
-                            //     $name = $_POST['txtPatient'];
-                            //     $email = $_POST['txtMail'];
-                            //     $phone = $_POST['txtPhone'];
-                            //     $department = $_POST['txtDep'];
-                            //     $doctor = $_POST['txtDoc'];
-                            //     $date = $_POST['txtDate'];
-                            //     $time = $_POST['txtTime'];
-                            //     $msg = $_POST['txtMsg'];
-                            
-
-
-
-                            //     $cols .= "patient_id='" . $name . "',phone_no='" . $phone . "',date='" . $date . "',time='" . $time . "',doctor_id='" . $doctor . "',department_id='" . $department . "',message='" . $msg . "'";
-                            //     $query = mysqli_query($cnn, "update appointment set " . $cols . " where id=" . $id . "");
-                            //     if ($query > 0) {
-                            //         echo "<script>window.location.replace('appointments.php');</script>";
-                            //     } else {
-                            //         echo "<script>alert('Some error occured.Please try again');</script>";
-                            //     }
-                            // }
-                            
-                            ?>
                         </div>
                     </div>
                     <div class="notification-box">
@@ -510,7 +454,7 @@ if (
             <script src="assets/js/moment.min.js"></script>
             <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
             <?php include("included_js.php"); ?>
-            <script src="../newjs/b_patients.js"></script>
+            <script src="../newjs/out_patients.js"></script>
             <script>
                 function calculateHours() {
                     const admitDate = document.getElementById('txtAdate').value;

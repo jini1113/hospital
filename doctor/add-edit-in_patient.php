@@ -18,13 +18,13 @@ if (
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../admin/assets/img/favicon.ico">
     <title>Hospital Management System</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="../admin/assets/css/style.css">
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>
@@ -84,27 +84,33 @@ if (
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <?php
+                                                $query_doctor = mysqli_query($cnn, "SELECT * FROM staff WHERE email='" . $_SESSION['admin'] . "'");
+                                                $row_doctor = mysqli_fetch_array($query_doctor);
+                                            ?>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Doctor</label>
-                                                <select class="select" id="txtDoc" name="txtDoc">
+                                                <input type="text" class="form-control" value="<?php echo $row_doctor['name']; ?>" readonly>
+                                                <input type="hidden" id="txtDoc" name="txtDoc" value="<?php echo $row_doctor['id']; ?>">
+                                               
+                                                <!-- <select class="select" id="txtDoc" name="txtDoc">
                                                     <option value="">Select</option>
                                                     <?php
-                                                    $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
-                                                    while ($row_doctor = mysqli_fetch_array($query_doctor)) {
-                                                        echo "<option value='" . $row_doctor['id'] . "'";
-                                                        if (isset($_GET['id'])) {
-                                                            // Assuming $row is defined earlier and contains the data of the item being edited
-                                                            if ($row['doctor_id'] == $row_doctor['id']) {
-                                                                echo " selected";
-                                                            }
-                                                        }
-                                                        echo ">" . $row_doctor['name'] . "</option>";
-                                                    }
+                                                    // $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
+                                                    // while ($row_doctor = mysqli_fetch_array($query_doctor)) {
+                                                    //     echo "<option value='" . $row_doctor['id'] . "'";
+                                                    //     if (isset($_GET['id'])) {
+                                                    //         // Assuming $row is defined earlier and contains the data of the item being edited
+                                                    //         if ($row['doctor_id'] == $row_doctor['id']) {
+                                                    //             echo " selected";
+                                                    //         }
+                                                    //     }
+                                                    //     echo ">" . $row_doctor['name'] . "</option>";
+                                                    // }
                                                     ?>
 
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
 
@@ -489,16 +495,16 @@ if (
                 </div>
             </div>
             <div class="sidebar-overlay" data-reff=""></div>
-            <script src="assets/js/jquery-3.2.1.min.js"></script>
-            <script src="assets/js/popper.min.js"></script>
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script src="assets/js/jquery.slimscroll.js"></script>
-            <script src="assets/js/select2.min.js"></script>
-            <script src="assets/js/app.js"></script>
-            <script src="assets/js/moment.min.js"></script>
-            <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-            <?php include("included_js.php"); ?>
-            <script src="../newjs/in_patients.js"></script>
+            <script src="../admin/assets/js/jquery-3.2.1.min.js"></script>
+            <script src="../admin/assets/js/popper.min.js"></script>
+            <script src="../admin/assets/js/bootstrap.min.js"></script>
+            <script src="../admin/assets/js/jquery.slimscroll.js"></script>
+            <script src="../admin/assets/js/select2.min.js"></script>
+            <script src="../admin/assets/js/app.js"></script>
+            <script src="../admin/assets/js/moment.min.js"></script>
+            <script src="../admin/assets/js/bootstrap-datetimepicker.min.js"></script>
+            <?php include("../admin/included_js.php"); ?>
+            <script src="../newjs/in_patients_doctor.js"></script>
             <script>
                 function calculateHours() {
                     const admitDate = document.getElementById('txtAdate').value;
