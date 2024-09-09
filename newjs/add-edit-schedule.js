@@ -1,11 +1,29 @@
 
 $("#frm").validate({
     rules :{
+        "txtDays" :{
+            required: true,
+        },
+        "txtFtime" :{
+            required: true,
+        },
+        "txtTotime" :{
+            required: true,
+        },
         "txtMsg" :{
             required: true,
         },
     },
     messages: {
+        "txtDays": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtFtime": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtTotime": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
         "txtMsg": {
             required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
         },

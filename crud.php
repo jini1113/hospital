@@ -660,5 +660,64 @@ if ($_GET['what'] == "updateschedule") {
     echo json_encode($response);
 }
 
-
+// Reject appointment
+if ($_GET['what'] == "rejectApp") {
+    // $name = $_POST['name'];
+    // $description = $_POST['description'];
+    $id = $_POST['id'];
+    $query = mysqli_query($cnn, "update appointment set status='Active' where id=" . $id . "");
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Appointment Approved successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// approve appointment
+if ($_GET['what'] == "approveApp") {
+    // $name = $_POST['name'];
+    // $description = $_POST['description'];
+    $id = $_POST['id'];
+    $query = mysqli_query($cnn, "update appointment set status='Rejected' where id=" . $id . "");
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Appointment Rejected successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// active  Doctor appointment
+if ($_GET['what'] == "active_app") {
+    // $name = $_POST['name'];
+    // $description = $_POST['description'];
+    $id = $_POST['id'];
+    $query = mysqli_query($cnn, "update appointment set status='Active' where id=" . $id . "");
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Appointment Active successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// Block doctor  appointment
+if ($_GET['what'] == "block_App") {
+    // $name = $_POST['name'];
+    // $description = $_POST['description'];
+    $id = $_POST['id'];
+    $query = mysqli_query($cnn, "update appointment set status='Block' where id=" . $id . "");
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Appointment Block successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
 ?>

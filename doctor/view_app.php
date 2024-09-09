@@ -25,6 +25,18 @@ include("header.php");
         .btn-rounded {
             background-color: #4a4998 !important;
         }
+        .txt_header {
+            font-size: 15px;
+            font-weight: 600;
+            color: #72849a !important;
+        }
+
+        .txt1 {
+            color: black !important;
+            border-bottom: 2px solid #3f87f5;
+            font-weight: 700;
+            border-radius: 0;
+        }
     </style>
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
@@ -40,15 +52,25 @@ include("header.php");
                     <div class="col-sm-4 col-3">
                         <h4 class="page-title">Appointment</h4>
                     </div>
+                   
                     <!-- <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-edit-schedule.php" class="btn btn btn-primary btn-rounded float-right"><i
                                 class="fa fa-plus"></i> Add Schedule</a>
                     </div> -->
                 </div>
-                <div class="row">
+                <div>
+                <table class="travel_tbl">
+                    <tr>
+                        <td><a id="requeted" class="btn txt1 ">Requested Appointment</a></td>
+                        <td><a id="active" class="btn  txt_header">Accpted Appointment</a></td>
+
+                    </tr>
+                </table>
+            </div><br />
+                <div class="row" id="view1"  hidden>
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_app">
+                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_app1">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -60,7 +82,6 @@ include("header.php");
                                         <th>Patient Number</th>
                                         <th>Message</th>
                                         <th>Status</th>
-                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,7 +97,7 @@ include("header.php");
                                             JOIN
                                                 staff AS d ON a.doctor_id = d.id
                                             JOIN
-                                                patients AS  p ON a.patient_id = p.id WHERE doctor_id='$doctor_id'");
+                                                patients AS  p ON a.patient_id = p.id WHERE doctor_id='$doctor_id' AND a.status IN ('Active', 'Block');");
                                    $cnt = 1;
                                    while ($row = mysqli_fetch_array($query)) {
                                        echo "<tr>";
@@ -90,11 +111,91 @@ include("header.php");
                                        echo "<td>" . $row['message'] . "</td>";
                                        if ($row['status'] == 'Active') {
                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
-                                       } else {
+                                        } else {
                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                        
                                        }
                                     //    echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
-                                       echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
+                                    //    echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
+
+                                       echo "</tr>";
+                                       $cnt++;
+                                   }
+                               
+                                    ?>
+
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <!-- <th></th> -->
+                                        <!-- <th></th> -->
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="view2">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_app2">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Doctor Name</th>
+                                        <th>Patient Name</th>
+                                        <th>Patient Email</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Patient Number</th>
+                                        <th>Message</th>
+                                        <th>Accepetd request</th>
+                                        <th>Rejected request</th>
+                                        <!-- <th>fgt</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                               
+                                   $query_user = mysqli_query($cnn, "SELECT * FROM staff WHERE email='" . $_SESSION['admin'] . "'");
+                                   $row_user = mysqli_fetch_array($query_user);
+                                   $doctor_id = $row_user['id'];
+                                   
+                                   $query = mysqli_query($cnn, "SELECT d.name AS doctor_name,p.name AS patient_name,p.email As patient_email,p.phone_no As patient_number,a.* FROM appointment AS a
+                                            JOIN
+                                                staff AS d ON a.doctor_id = d.id
+                                            JOIN
+                                                patients AS  p ON a.patient_id = p.id WHERE doctor_id='$doctor_id' AND a.status='Pending'");
+                                   $cnt = 1;
+                                   while ($row = mysqli_fetch_array($query)) {
+                                       echo "<tr>";
+                                       echo "<td>" . $cnt . "</td>";
+                                       echo "<td>" . $row_user['name'] . "</td>"; // Use $row_user['name'] instead of querying again
+                                       echo "<td>" . $row['patient_name'] . "</td>";
+                                       echo "<td>" . $row['patient_email'] . "</td>";
+                                       echo "<td>" . $row['date'] . "</td>";
+                                       echo "<td>" . $row['time'] . "</td>";
+                                       echo "<td>" . $row['patient_number'] . "</td>";
+                                       echo "<td>" . $row['message'] . "</td>";
+                                       if ($row['status'] == 'Pending') {
+                                           echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Approved</button></td>";
+                                           echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Rejected</button></td>";
+                                       } else {
+                                        
+                                       }
+                                    //    echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
+                                    //    echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
 
                                        echo "</tr>";
                                        $cnt++;
@@ -373,10 +474,10 @@ include("header.php");
     <script src="../admin/assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="../admin/assets/js/app.js"></script>
     <?php include("included_js.php"); ?>
-    <script type="text/javascript" src="../newjs/schedule.js"></script>
+    <script type="text/javascript" src="../newjs/view_app.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tbl_app').DataTable({
+            $('#tbl_app1').DataTable({
                 "pageLength": 10,
                 "searching": true,
                 "language": {
@@ -388,7 +489,22 @@ include("header.php");
                 }
             });
         });
+        $(document).ready(function () {
+            $('#tbl_app2').DataTable({
+                "pageLength": 10,
+                "searching": true,
+                "language": {
+                    "lengthMenu": "Show _MENU_ entries",
+                    "zeroRecords": "No Entry found",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "Showing 0 to 0 of 0 Entry",
+                    "infoFiltered": "(filtered from _MAX_ total entries)"
+                }
+            });
+        });
+        
     </script>
+    
 </body>
 
 

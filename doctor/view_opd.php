@@ -25,6 +25,18 @@ include("header.php");
         .btn-rounded {
             background-color: #4a4998 !important;
         }
+        .txt_header {
+            font-size: 15px;
+            font-weight: 600;
+            color: #72849a !important;
+        }
+
+        .txt1 {
+            color: black !important;
+            border-bottom: 2px solid #3f87f5;
+            font-weight: 700;
+            border-radius: 0;
+        }
     </style>
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
@@ -38,27 +50,42 @@ include("header.php");
             <div class="content">
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h4 class="page-title">Doctor Schedule</h4>
+                        <h4 class="page-title">OPD Patients</h4>
                     </div>
-                    <div class="col-sm-8 col-9 text-right m-b-20">
+                   
+                    <!-- <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="add-edit-schedule.php" class="btn btn btn-primary btn-rounded float-right"><i
                                 class="fa fa-plus"></i> Add Schedule</a>
-                    </div>
+                    </div> -->
                 </div>
-                <div class="row">
+                <div>
+                <table class="travel_tbl">
+                    <tr>
+                        <td><a id="requeted" class="btn txt1 ">Admit</a></td>
+                        <td><a id="active" class="btn  txt_header">Discharge</a></td>
+
+                    </tr>
+                </table>
+            </div><br />
+            <!-- Active-block -->
+                <div class="row" id="view1"  hidden>
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_schedule">
+                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_app1">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
+                                    <th>No.</th>
                                         <th>Doctor Name</th>
-                                        <th>Days</th>
-                                        <th>From_Time</th>
-                                        <th>To_Time</th>
-                                        <th>Message</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Patient Name</th>
+                                        <th>Patient No</th>
+                                        <th>Ward Name</th>
+                                        <th>Bed No</th>
+                                        <th>Admit Date</th>
+                                        <th>Discharge Date</th>
+                                        <th>Admit Time</th>
+                                        <th>Discharge Time</th>
+                                        <th>Hours</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,23 +97,48 @@ include("header.php");
                                    $row_user = mysqli_fetch_array($query_user);
                                    $doctor_id = $row_user['id'];
                                    
-                                   $query = mysqli_query($cnn, "SELECT * FROM d_schedule WHERE doctor_id='$doctor_id'");
+                                   $query = mysqli_query($cnn, "SELECT 
+                                                o.*, 
+                                                d.name AS doctor_name,
+                                                p.name AS patient_name,
+                                                p.phone_no AS patient_no,
+                                                w.name AS ward_name,
+                                                b.bed_no 
+                                            FROM 
+                                                out_patient AS o
+                                            JOIN 
+                                                staff AS d ON o.doctor_id = d.id
+                                            JOIN 
+                                                patients AS p ON o.patient_id = p.id
+                                            JOIN 
+                                                ward AS w ON o.ward_id = w.id
+                                            JOIN 
+                                                bed AS b ON o.bed_id = b.id
+                                            WHERE
+                                                doctor_id='$doctor_id' AND 
+                                                o.status = 'Discharge';");
                                    $cnt = 1;
                                    while ($row = mysqli_fetch_array($query)) {
                                        echo "<tr>";
                                        echo "<td>" . $cnt . "</td>";
                                        echo "<td>" . $row_user['name'] . "</td>"; // Use $row_user['name'] instead of querying again
-                                       echo "<td>" . $row['days'] . "</td>";
-                                       echo "<td>" . $row['from_time'] . "</td>";
-                                       echo "<td>" . $row['to_time'] . "</td>";
-                                       echo "<td>" . $row['message'] . "</td>";
-                                       if ($row['status'] == 'Active') {
-                                           echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
-                                       } else {
-                                           echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
-                                       }
-                                       echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
-                                       echo "<a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link' data-target='#delete-modal' data-toggle='modal'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
+                                       echo "<td>" . $row['patient_name'] . "</td>";
+                                       echo "<td>" . $row['patient_no'] . "</td>";
+                                       echo "<td>" . $row['ward_name'] . "</td>";
+                                       echo "<td>" . $row['bed_no'] . "</td>";
+                                       echo "<td>" . $row['a_date'] . "</td>";
+                                       echo "<td>" . $row['d_date'] . "</td>";
+                                       echo "<td>" . $row['a_time'] . "</td>";
+                                       echo "<td>" . $row['d_time'] . "</td>";
+                                       echo "<td>" . $row['hours'] . "</td>";
+                                    //    if ($row['status'] == 'Active') {
+                                    //        echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
+                                    //     } else {
+                                    //        echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                        
+                                    //    }
+                                    //    echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
+                                    //    echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
 
                                        echo "</tr>";
                                        $cnt++;
@@ -97,7 +149,108 @@ include("header.php");
 
                                     </tr>
                                 </tbody>
-                                <!-- <tfoot>
+                                <tfoot>
+                                    <tr>
+                                    <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Requested-->
+                <div class="row" id="view2">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_app2">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Doctor Name</th>
+                                        <th>Patient Name</th>
+                                        <th>Patient No</th>
+                                        <th>Ward Name</th>
+                                        <th>Bed No</th>
+                                        <th>Admit Date</th>
+                                        <th>Discharge Date</th>
+                                        <th>Admit Time</th>
+                                        <th>Discharge Time</th>
+                                        <th>Hours</th>
+                                       
+                                        <!-- <th>fgt</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                               
+                                   $query_user = mysqli_query($cnn, "SELECT * FROM staff WHERE email='" . $_SESSION['admin'] . "'");
+                                   $row_user = mysqli_fetch_array($query_user);
+                                   $doctor_id = $row_user['id'];
+                                   
+                                   $query = mysqli_query($cnn, "SELECT  
+                                                        o.*, 
+                                                        d.name AS doctor_name,
+                                                        p.name AS patient_name,
+                                                        p.phone_no AS patient_no,
+                                                        w.name AS ward_name,
+                                                        b.bed_no 
+                                                    FROM 
+                                                        out_patient AS o
+                                                    JOIN 
+                                                        staff AS d ON o.doctor_id = d.id
+                                                    JOIN 
+                                                        patients AS p ON o.patient_id = p.id
+                                                    JOIN 
+                                                        ward AS w ON o.ward_id = w.id
+                                                    JOIN 
+                                                        bed AS b ON o.bed_id = b.id
+                                                    WHERE 
+                                                        doctor_id='$doctor_id' AND
+                                                        o.status = 'Admit';");
+                                        $cnt = 1;
+                                        while ($row = mysqli_fetch_array($query)) {
+                                       echo "<tr>";
+                                       echo "<td>" . $cnt . "</td>";
+                                       echo "<td>" . $row_user['name'] . "</td>"; // Use $row_user['name'] instead of querying again
+                                       echo "<td>" . $row['patient_name'] . "</td>";
+                                       echo "<td>" . $row['patient_no'] . "</td>";
+                                       echo "<td>" . $row['ward_name'] . "</td>";
+                                       echo "<td>" . $row['bed_no'] . "</td>";
+                                       echo "<td>" . $row['a_date'] . "</td>";
+                                       echo "<td>" . $row['d_date'] . "</td>";
+                                       echo "<td>" . $row['a_time'] . "</td>";
+                                       echo "<td>" . $row['d_time'] . "</td>";
+                                       echo "<td>" . $row['hours'] . "</td>";
+                                    //    echo "<td>" . $row['message'] . "</td>";
+                                    //    if ($row['status'] == 'Pending') {
+                                    //        echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Approved</button></td>";
+                                    //        echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Rejected</button></td>";
+                                    //    } else {
+                                        
+                                    //    }
+                                    //    echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
+                                    //    echo "<td><a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
+
+                                       echo "</tr>";
+                                       $cnt++;
+                                   }
+                               
+                                    ?>
+
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
                                     <tr>
                                         <th></th>
                                         <th></th>
@@ -111,7 +264,7 @@ include("header.php");
                                         <th></th>
                                         <th></th>
                                     </tr>
-                                </tfoot> -->
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -365,10 +518,10 @@ include("header.php");
     <script src="../admin/assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="../admin/assets/js/app.js"></script>
     <?php include("included_js.php"); ?>
-    <script type="text/javascript" src="../newjs/schedule.js"></script>
+    <script type="text/javascript" src="../newjs/view_ipd.js"></script>
     <script>
         $(document).ready(function () {
-            $('#tbl_schedule').DataTable({
+            $('#tbl_app1').DataTable({
                 "pageLength": 10,
                 "searching": true,
                 "language": {
@@ -380,7 +533,22 @@ include("header.php");
                 }
             });
         });
+        $(document).ready(function () {
+            $('#tbl_app2').DataTable({
+                "pageLength": 10,
+                "searching": true,
+                "language": {
+                    "lengthMenu": "Show _MENU_ entries",
+                    "zeroRecords": "No Entry found",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "Showing 0 to 0 of 0 Entry",
+                    "infoFiltered": "(filtered from _MAX_ total entries)"
+                }
+            });
+        });
+        
     </script>
+    
 </body>
 
 

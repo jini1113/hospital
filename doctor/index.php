@@ -229,12 +229,12 @@ if (
                             <a href="#"><i class="	fa fa-tint"></i> <span>IPD/OPD</span> <span
                                     class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a href="donors.php">IPD Patients </a></li>
-                                <li><a href="blood-issue.php"> OPD Patients </a></li>
+                                <li><a href="view_ipd.php">IPD Patients </a></li>
+                                <li><a href="view_opd.php"> OPD Patients </a></li>
                             </ul>
                         </li>
                     <li>
-                        <a href="appointments.php"><i class="fa fa-calendar"></i> <span>Operations</span></a>
+                        <a href="operation.php"><i class="fa fa-calendar"></i> <span>Operations</span></a>
                     </li>
                     <li>
                         <a href="department.php"><i class="fa fa-hospital-o"></i> <span>Appointments</span></a>
