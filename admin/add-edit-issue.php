@@ -1,5 +1,6 @@
 <?php
 include("../connection.php");
+include("header.php");
 session_start();
 if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
@@ -19,7 +20,6 @@ if (isset($_GET['donor_id'])) {
     }
     exit; // Ensure the script stops here when fetching blood group
 }
-include("header.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,7 +1,7 @@
 <?php
 include("../connection.php");
 include("header.php");
-// session_start();
+session_start();
 if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
     $_SESSION["admin"] == ""

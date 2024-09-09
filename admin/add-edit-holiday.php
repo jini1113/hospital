@@ -1,5 +1,6 @@
 <?php
 include("../connection.php");
+include("header.php");
 session_start();
 if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
@@ -7,7 +8,6 @@ if (
 ) {
     header("Location:../login.php");
 }
-include("header.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

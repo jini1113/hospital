@@ -1,5 +1,6 @@
 <?php
 include("../connection.php");
+include("header.php");
 session_start();
 if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
@@ -12,7 +13,6 @@ if (isset($_GET['id'])) {
     $query = mysqli_query($cnn, "SELECT i.*, t.percentage AS tax_percentage FROM invoice i LEFT JOIN tax t ON i.tax_id = t.id WHERE i.id=" . $_GET['id']);
     $row = mysqli_fetch_array($query);
 }
-include("header.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
