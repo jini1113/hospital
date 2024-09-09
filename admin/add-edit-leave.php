@@ -206,7 +206,7 @@ if (
                             }
                         }
                         ?>
-                        
+
                     </div>
                 </div>
                 <div class="notification-box">

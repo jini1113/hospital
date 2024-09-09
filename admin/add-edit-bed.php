@@ -65,7 +65,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" id="frm" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
@@ -100,7 +100,35 @@ if (
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Room Type</label>
+                                                <select class="select" id="txtType" name="txtType">
+                                                    <option value="">Select Type</option>
+                                                    <?php
+                                                    $roomPrices = [
+                                                        'AC' => 1500,
+                                                        'General' => 800,
+                                                        'Deluxe' => 2000
+                                                    ];
 
+                                                    foreach ($roomPrices as $type => $price) {
+                                                        $selected = (isset($_GET['id']) && $row['type'] == $type) ? 'selected' : '';
+                                                        echo "<option value=\"$type\" data-price=\"$price\" $selected>$type</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label>Price</label>
+                                                <input type="text" id="txtPrice" name="txtPrice" class="form-control"
+                                                    value="<?php if (isset($_GET['id'])) {
+                                                        echo $row['price'];
+                                                    } ?>" readonly />
+                                            </div>
+                                        </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Decription</label>
@@ -120,46 +148,6 @@ if (
                                     </div>
                                 </form>
                             </div>
-                            <!-- insert code -->
-                            <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $bed_no = $_POST['txtNo'];
-                                $ward = $_POST['txtWard'];
-                                $des = $_POST['txtDes'];
-
-                                $cols = "bed_no,ward_id,des,status";
-                                $values = "'$bed_no','$ward', '$des','Avaliable'";
-
-
-
-                                $query = mysqli_query($cnn, "INSERT INTO bed ($cols) VALUES ($values)");
-
-
-                                if ($query) {
-                                    echo "<script>window.location.replace('bed.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                }
-                            }
-
-
-                            // update code
-                            if (isset($_POST['btnUpdate'])) {
-                                $id = $_POST['txtUId'];
-                                $bed_no = $_POST['txtNo'];
-                                $ward = $_POST['txtWard'];
-                                $des = $_POST['txtDes'];
-
-                                $cols = "bed_no='" . $bed_no . "',ward_id='" . $ward . "',des='" . $des . "'";
-
-                                $query = mysqli_query($cnn, "update bed set " . $cols . " where id=" . $id . "");
-                                if ($query > 0) {
-                                    echo "<script>window.location.replace('bed.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occured.Please try again');</script>";
-                                }
-                            }
-                            ?>
 
                         </div>
                     </div>
@@ -411,7 +399,7 @@ if (
         <script src="assets/js/moment.min.js"></script>
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <?php include("included_js.php"); ?>
-        <script src="../newjs/employee.js"></script>
+        <script src="../newjs/bed.js"></script>
 
 </body>
 

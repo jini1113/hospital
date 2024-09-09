@@ -54,7 +54,7 @@ if (isset($_GET['id'])) {
                                 if (isset($_GET['id'])) {
                                     echo "Update Patients ";
                                 } else {
-                                    echo "Add Patients ";
+                                    echo "Add Bed-Patients ";
                                 }
                                 ?>
                         </div>
@@ -62,7 +62,7 @@ if (isset($_GET['id'])) {
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="POST" id="updateForm" enctype="multipart/form-data">
+                                <form method="POST" id="frm" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -132,17 +132,17 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
 
-                                    <!-- <div class="m-t-20 text-center">
-                                            <button type="submit"
-                                                name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
-                                                id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
-                                                class="btn btn-primary submit-btn">Save
-                                            </button>
-                                        </div> -->
                                     <div class="m-t-20 text-center">
+                                        <button type="submit"
+                                            name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
+                                            id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
+                                            class="btn btn-primary submit-btn">Save
+                                        </button>
+                                    </div>
+                                    <!-- <div class="m-t-20 text-center">
                                         <button type="submit" name="btnSubmit"
                                             class="btn btn-primary submit-btn">Save</button>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                         </div>

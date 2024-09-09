@@ -1,26 +1,12 @@
 <?php
 include("../connection.php");
-session_start();
 include("header.php");
-if (
-    !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
-    $_SESSION["admin"] == ""
-) {
-    header("Location:../login.php");
-}
-if (isset($_GET['id'])) {
-    $query = mysqli_query($cnn, "select * from d_schedule where id=" . $_GET['id'] . "");
-    $row = mysqli_fetch_array($query);
-    $availableDays = explode(", ", $row['days']);
-} else {
-    $availableDays = []; // Initialize if not updating
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 
-<!-- add-schedule24:07-->
+<!-- salary23:27-->
 
 <head>
     <meta charset="utf-8">
@@ -29,6 +15,7 @@ if (isset($_GET['id'])) {
     <title>Hospital Management System</title>
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -43,165 +30,117 @@ if (isset($_GET['id'])) {
         <div class="page-wrapper">
             <div class="content">
                 <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
-                        <?php
-                        if (isset($_GET['id'])) {
-                            $query = mysqli_query($cnn, "select * from d_schedule where id=" . $_GET['id'] . "");
-                            $row = mysqli_fetch_array($query);
-                            $availableDays = explode(", ", $row['days']);
-                        }
-                        ?>
-                        <div class="title ">
-                            <h2 class="h3  ">
-                                <?php
-                                if (isset($_GET['id'])) {
-                                    echo "Update Doctor-Schedule";
-                                } else {
-                                    echo "Add Doctor-Schedule ";
-                                }
-                                ?>
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Employee Salary</h4>
+                    </div>
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="add-edit-salary.php" class="btn btn btn-primary btn-rounded float-right"><i
+                                class="fa fa-plus"></i> Add Salary</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table  mb-0 m-auto text-center " id="tbl_salary">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Employee Name</th>
+                                        <th>Amount</th>
+                                        <th>Payment Type</th>
+                                        <th>Payment Date</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $query = mysqli_query($cnn, "select * from salary ");
+                                    $cnt = 1;
+                                    while ($row = mysqli_fetch_array($query)) {
+
+                                        $query_emp = mysqli_query($cnn, "select * from staff where role='Staff' AND id=" . $row['emp_id'] . "");
+                                        $row_emp = mysqli_fetch_array($query_emp);
+
+                                        echo "<tr>";
+                                        echo "<td>" . $cnt . "</td>";
+                                        echo "<td>" . $row_emp['name'] . "</td>";
+                                        echo "<td>" . $row['amount'] . "</td>";
+                                        echo "<td>" . $row['type'] . "</td>";
+                                        echo "<td>" . $row['pdate'] . "</td>";
+                                        echo "<td>" . $row['des'] . "</td>";
+                                        if ($row['status'] == 'Pending') {
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' data-toggle='modal' data-target='#paidModal' style='border-radius:4px;' data-id=" . $row['id'] . ">Pending</button></td>";
+                                            // echo "<td>" . $row['id'] . "</td>";
+                                    
+                                        } else {
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Paid</button></td>";
+                                        }
+                                        echo "<td><a href='add-edit-salary.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
+                                        <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
+                                        // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";
+                                    
+
+
+
+                                        echo "</tr>";
+                                        $cnt++;
+                                    }
+                                    ?>
+
+
+                                    </tr>
+                                </tbody>
+                                <!-- <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot> -->
+                            </table>
                         </div>
                     </div>
-                    <div class="card pt-5 pb-5 m-auto w-75 ">
-                        <div class="row">
-                            <div class="col-lg-8 offset-lg-2">
-                                <form method="POST" id="frm">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <input id="txtUId" name="txtUId" value="<?php if (isset($_GET['id'])) {
-                                                    echo $row['id'];
-                                                } ?>" hidden />
-
-                                                <label>Doctor Name</label>
-                                                <select class="select" id="txtDoc" name="txtDoc">
-                                                    <option value="">Select</option>
-                                                    <?php
-                                                    $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
-                                                    while ($row_doctor = mysqli_fetch_array($query_doctor)) {
-                                                        echo "<option value='" . $row_doctor['id'] . "'";
-                                                        if (isset($_GET['id'])) {
-                                                            // Assuming $row is defined earlier and contains the data of the item being edited
-                                                            if ($row['doctor_id'] == $row_doctor['id']) {
-                                                                echo " selected";
-                                                            }
-                                                        }
-                                                        echo ">" . $row_doctor['name'] . "</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label>Available Days</label>
-                                                <select class="select" multiple name="txtDays[]" id="txtDays">
-                                                    <option value="">Select Days</option>
-                                                    <?php
-                                                    $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                                                    foreach ($days as $day) {
-                                                        $selected = in_array($day, $availableDays) ? 'selected' : '';
-                                                        echo "<option value='$day' $selected>$day</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>From(time) </label>
-                                                <input class="form-control" type="time" name="txtFtime" id="txtFtime"
-                                                    value="<?php if (isset($_GET['id'])) {
-                                                        echo $row['from_time'];
-                                                    } ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>To(time) </label>
-                                                <input class="form-control" type="time" name="txtTotime" id="txtTotime"
-                                                    value="<?php if (isset($_GET['id'])) {
-                                                        echo $row['to_time'];
-                                                    } ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Message</label>
-                                        <textarea cols="30" rows="4" class="form-control" id="txtMsg" name="txtMsg"><?php if (isset($_GET['id'])) {
-                                            echo $row['message'];
-                                        } ?></textarea>
-                                    </div>
-                                    <div class="m-t-20 text-center">
-                                        <button type="button"
-                                            name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
-                                            id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
-                                            class="btn btn-primary submit-btn">Save
-                                            changes</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- insert code -->
-                    <?php
-                    // if (isset($_POST['btnSubmit'])) {
-                    //     $doctor = $_POST['txtDoc'];
-                    //     $days = implode(", ", $_POST['txtDays']);
-                    //     $from = date('H:i', strtotime($_POST['txtFtime']));
-                    //     $to = date('H:i', strtotime($_POST['txtTotime']));
-                    //     $msg = $_POST['txtMsg'];
-                    
-
-
-                    //     $cols = "doctor_id,days,from_time,to_time,message,status";
-                    //     $values = "'$doctor','$days', '$from', '$to','$msg','Active'";
-                    
-
-
-
-                    //     $query = mysqli_query($cnn, "INSERT INTO d_schedule ($cols) VALUES ($values)");
-                    
-                    //     if ($query) {
-                    //         echo "<script>window.location.replace('schedule.php');</script>";
-                    //     } else {
-                    //         echo "<script>alert('Some error occurred. Please try again.');</script>";
-                    //     }
-                    // }
-                    
-                    // update code
-                    // if (isset($_POST['btnUpdate'])) {
-                    //     $id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
-                    //     $doctor = mysqli_real_escape_string($cnn, $_POST['txtDoc']);
-                    
-                    //     // Check if txtDays is set and is an array
-                    //     if (isset($_POST['txtDays']) && is_array($_POST['txtDays'])) {
-                    //         $days = implode(", ", $_POST['txtDays']);
-                    //     } else {
-                    //         $days = ""; // Set to empty string if no days are selected
-                    //     }
-                    
-                    //     $from = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtFtime'])));
-                    //     $to = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtTotime'])));
-                    //     $msg = mysqli_real_escape_string($cnn, $_POST['txtMsg']);
-                    
-                    //     $query = mysqli_query($cnn, "UPDATE d_schedule SET 
-                    //         doctor_id = '$doctor',
-                    //         days = '$days',
-                    //         from_time = '$from',
-                    //         to_time = '$to',
-                    //         message = '$msg'
-                    //         WHERE id = '$id'");
-                    
-                    //     if ($query) {
-                    //         echo "<script>window.location.replace('schedule.php');</script>";
-                    //     } else {
-                    //         echo "<script>alert('Some error occurred. Please try again');</script>";
-                    //     }
-                    // }
-                    ?>
                 </div>
             </div>
+
+            <!--Unpaid Modal -->
+            <div class="modal fade" id="paidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="frm">
+                                <div class="fomr-group">
+                                    <input id="txtUId" name="txtUId" hidden />
+                                    <label>Paid Date :</label>
+                                    <input type="date" class="form-control" id="txtDte" name="txtDte" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnSave" name="btnSave" class="btn add">Save changes</button>
+                            <button type="button" class="btn back" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="notification-box">
                 <div class="msg-sidebar notifications msg-noti">
                     <div class="topnav-dropdown-header">
@@ -219,8 +158,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author">Richard Miles </span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -236,8 +174,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author">John Doe</span>
                                             <span class="message-time">1 Aug</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -253,8 +190,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author"> Tarah Shropshire </span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -270,8 +206,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author">Mike Litorus</span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -287,8 +222,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author"> Catherine Manseau </span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -304,8 +238,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author"> Domenic Houston </span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -321,8 +254,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author"> Buster Wigton </span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -338,8 +270,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author"> Rolland Webber </span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -355,8 +286,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author"> Claire Mapes </span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -372,8 +302,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author">Melita Faucher</span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -389,8 +318,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author">Jeffery Lalor</span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -406,8 +334,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author">Loren Gatlin</span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -423,8 +350,7 @@ if (isset($_GET['id'])) {
                                             <span class="message-author">Tarah Shropshire</span>
                                             <span class="message-time">12:28 AM</span>
                                             <div class="clearfix"></div>
-                                            <span class="message-content">Lorem ipsum dolor sit amet,
-                                                consectetur
+                                            <span class="message-content">Lorem ipsum dolor sit amet, consectetur
                                                 adipiscing</span>
                                         </div>
                                     </div>
@@ -438,6 +364,19 @@ if (isset($_GET['id'])) {
                 </div>
             </div>
         </div>
+        <div id="delete_schedule" class="modal fade delete-modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <img src="assets/img/sent.png" alt="" width="50" height="46">
+                        <h3>Are you sure want to delete this Schedule?</h3>
+                        <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="sidebar-overlay" data-reff=""></div>
     <script src="assets/js/jquery-3.2.1.min.js"></script>
@@ -446,23 +385,29 @@ if (isset($_GET['id'])) {
     <script src="assets/js/jquery.slimscroll.js"></script>
     <script src="assets/js/select2.min.js"></script>
     <script src="assets/js/moment.min.js"></script>
-    <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="assets/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <!-- <script>
-        $(function () {
-            $('#datetimepicker3').datetimepicker({
-                format: 'LT'
-            });
-            $('#datetimepicker4').datetimepicker({
-                format: 'LT'
+    <?php include("included_js.php"); ?>
+    <script type="text/javascript" src="../newjs/salary.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tbl_salary').DataTable({
+                "pageLength": 10,
+                "searching": true,
+                "language": {
+                    "lengthMenu": "Show _MENU_ entries",
+                    "zeroRecords": "No holidays found",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "Showing 0 to 0 of 0 holidays",
+                    "infoFiltered": "(filtered from _MAX_ total entries)"
+                }
             });
         });
-        </script> -->
-    <?php include("included_js.php"); ?>
-    <script src="../newjs/add-edit-schedule.js"></script>
+    </script>
 </body>
 
 
-<!-- add-schedule24:07-->
+<!-- salary23:28-->
 
 </html>

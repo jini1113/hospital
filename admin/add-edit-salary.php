@@ -1,26 +1,19 @@
 <?php
 include("../connection.php");
-session_start();
 include("header.php");
+session_start();
 if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
     $_SESSION["admin"] == ""
 ) {
     header("Location:../login.php");
 }
-if (isset($_GET['id'])) {
-    $query = mysqli_query($cnn, "select * from d_schedule where id=" . $_GET['id'] . "");
-    $row = mysqli_fetch_array($query);
-    $availableDays = explode(", ", $row['days']);
-} else {
-    $availableDays = []; // Initialize if not updating
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 
-<!-- add-schedule24:07-->
+<!-- add-salary24:08-->
 
 <head>
     <meta charset="utf-8">
@@ -30,7 +23,6 @@ if (isset($_GET['id'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
@@ -46,18 +38,17 @@ if (isset($_GET['id'])) {
                     <div class="col-lg-8 offset-lg-2">
                         <?php
                         if (isset($_GET['id'])) {
-                            $query = mysqli_query($cnn, "select * from d_schedule where id=" . $_GET['id'] . "");
+                            $query = mysqli_query($cnn, "select * from salary where id=" . $_GET['id'] . "");
                             $row = mysqli_fetch_array($query);
-                            $availableDays = explode(", ", $row['days']);
                         }
                         ?>
                         <div class="title ">
                             <h2 class="h3  ">
                                 <?php
                                 if (isset($_GET['id'])) {
-                                    echo "Update Doctor-Schedule";
+                                    echo "Update Salary";
                                 } else {
-                                    echo "Add Doctor-Schedule ";
+                                    echo "Add Salary";
                                 }
                                 ?>
                         </div>
@@ -73,63 +64,62 @@ if (isset($_GET['id'])) {
                                                     echo $row['id'];
                                                 } ?>" hidden />
 
-                                                <label>Doctor Name</label>
-                                                <select class="select" id="txtDoc" name="txtDoc">
+                                                <label>Employee Name</label>
+                                                <select class="select" id="txtEmp" name="txtEmp">
                                                     <option value="">Select</option>
                                                     <?php
-                                                    $query_doctor = mysqli_query($cnn, "SELECT * FROM staff where role='Doctor'");
-                                                    while ($row_doctor = mysqli_fetch_array($query_doctor)) {
-                                                        echo "<option value='" . $row_doctor['id'] . "'";
+                                                    $query_emp = mysqli_query($cnn, "SELECT * FROM staff where role='Staff'");
+                                                    while ($row_emp = mysqli_fetch_array($query_emp)) {
+                                                        echo "<option value='" . $row_emp['id'] . "'";
                                                         if (isset($_GET['id'])) {
                                                             // Assuming $row is defined earlier and contains the data of the item being edited
-                                                            if ($row['doctor_id'] == $row_doctor['id']) {
+                                                            if ($row['emp_id'] == $row_emp['id']) {
                                                                 echo " selected";
                                                             }
                                                         }
-                                                        echo ">" . $row_doctor['name'] . "</option>";
+                                                        echo ">" . $row_emp['name'] . "</option>";
                                                     }
                                                     ?>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+
+                                        <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Available Days</label>
-                                                <select class="select" multiple name="txtDays[]" id="txtDays">
-                                                    <option value="">Select Days</option>
+                                                <label>Amount of Pay</label>
+                                                <input class="form-control" type="text" name="txtAmt" id="txtAmt" value="<?php if (isset($_GET['id'])) {
+                                                    echo $row['amount'];
+                                                } ?>">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">   
+                                                <label for="txtType">Payment Type</label>
+                                                <select class="select" id="txtType" name="txtType">
+                                                    <option value="">Select Type</option>
                                                     <?php
-                                                    $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                                                    foreach ($days as $day) {
-                                                        $selected = in_array($day, $availableDays) ? 'selected' : '';
-                                                        echo "<option value='$day' $selected>$day</option>";
+                                                    $leaveTypes = [
+                                                        'Cash',
+                                                        'Online'
+                                                    ];
+
+                                                    foreach ($leaveTypes as $type) {
+                                                        $selected = (isset($_GET['id']) && $row['type'] == $type) ? 'selected' : '';
+                                                        echo "<option value=\"$type\" $selected>$type</option>";
                                                     }
                                                     ?>
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>From(time) </label>
-                                                <input class="form-control" type="time" name="txtFtime" id="txtFtime"
-                                                    value="<?php if (isset($_GET['id'])) {
-                                                        echo $row['from_time'];
-                                                    } ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>To(time) </label>
-                                                <input class="form-control" type="time" name="txtTotime" id="txtTotime"
-                                                    value="<?php if (isset($_GET['id'])) {
-                                                        echo $row['to_time'];
-                                                    } ?>">
-                                            </div>
-                                        </div>
+
+
                                     </div>
                                     <div class="form-group">
-                                        <label>Message</label>
-                                        <textarea cols="30" rows="4" class="form-control" id="txtMsg" name="txtMsg"><?php if (isset($_GET['id'])) {
-                                            echo $row['message'];
+                                        <label>Description</label>
+                                        <textarea cols="30" rows="4" class="form-control" id="txtDes" name="txtDes"><?php if (isset($_GET['id'])) {
+                                            echo $row['des'];
                                         } ?></textarea>
                                     </div>
                                     <div class="m-t-20 text-center">
@@ -143,63 +133,6 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
                     </div>
-                    <!-- insert code -->
-                    <?php
-                    // if (isset($_POST['btnSubmit'])) {
-                    //     $doctor = $_POST['txtDoc'];
-                    //     $days = implode(", ", $_POST['txtDays']);
-                    //     $from = date('H:i', strtotime($_POST['txtFtime']));
-                    //     $to = date('H:i', strtotime($_POST['txtTotime']));
-                    //     $msg = $_POST['txtMsg'];
-                    
-
-
-                    //     $cols = "doctor_id,days,from_time,to_time,message,status";
-                    //     $values = "'$doctor','$days', '$from', '$to','$msg','Active'";
-                    
-
-
-
-                    //     $query = mysqli_query($cnn, "INSERT INTO d_schedule ($cols) VALUES ($values)");
-                    
-                    //     if ($query) {
-                    //         echo "<script>window.location.replace('schedule.php');</script>";
-                    //     } else {
-                    //         echo "<script>alert('Some error occurred. Please try again.');</script>";
-                    //     }
-                    // }
-                    
-                    // update code
-                    // if (isset($_POST['btnUpdate'])) {
-                    //     $id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
-                    //     $doctor = mysqli_real_escape_string($cnn, $_POST['txtDoc']);
-                    
-                    //     // Check if txtDays is set and is an array
-                    //     if (isset($_POST['txtDays']) && is_array($_POST['txtDays'])) {
-                    //         $days = implode(", ", $_POST['txtDays']);
-                    //     } else {
-                    //         $days = ""; // Set to empty string if no days are selected
-                    //     }
-                    
-                    //     $from = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtFtime'])));
-                    //     $to = mysqli_real_escape_string($cnn, date('H:i', strtotime($_POST['txtTotime'])));
-                    //     $msg = mysqli_real_escape_string($cnn, $_POST['txtMsg']);
-                    
-                    //     $query = mysqli_query($cnn, "UPDATE d_schedule SET 
-                    //         doctor_id = '$doctor',
-                    //         days = '$days',
-                    //         from_time = '$from',
-                    //         to_time = '$to',
-                    //         message = '$msg'
-                    //         WHERE id = '$id'");
-                    
-                    //     if ($query) {
-                    //         echo "<script>window.location.replace('schedule.php');</script>";
-                    //     } else {
-                    //         echo "<script>alert('Some error occurred. Please try again');</script>";
-                    //     }
-                    // }
-                    ?>
                 </div>
             </div>
             <div class="notification-box">
@@ -448,21 +381,10 @@ if (isset($_GET['id'])) {
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <!-- <script>
-        $(function () {
-            $('#datetimepicker3').datetimepicker({
-                format: 'LT'
-            });
-            $('#datetimepicker4').datetimepicker({
-                format: 'LT'
-            });
-        });
-        </script> -->
     <?php include("included_js.php"); ?>
-    <script src="../newjs/add-edit-schedule.js"></script>
+    <script src="../newjs/salary.js"></script>
 </body>
 
 
-<!-- add-schedule24:07-->
 
 </html>

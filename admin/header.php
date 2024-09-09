@@ -277,7 +277,7 @@ include("../connection.php");
                         <a href="#"><i class="fa fa-book"></i> <span> Payroll </span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
-                            <li><a href="salary.html"> Employee Salary </a></li>
+                            <li><a href="salary.php"> Employee Salary </a></li>
                             <li><a href="salary-view.html"> Payslip </a></li>
                         </ul>
                     </li>
@@ -303,7 +303,7 @@ include("../connection.php");
                             <li><a href="mail-view.html">Mail View</a></li>
                         </ul>
                     </li> -->
-                    <li class="submenu">
+                    <!-- <li class="submenu">
                         <a href="#"><i class="fa fa-commenting-o"></i> <span> Blog</span> <span
                                 class="menu-arrow"></span></a>
                         <ul style="display: none;">
@@ -312,14 +312,14 @@ include("../connection.php");
                             <li><a href="add-blog.html">Add Blog</a></li>
                             <li><a href="edit-blog.html">Edit Blog</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="assets.php"><i class="fa fa-cube"></i> <span>Assets</span></a>
                     </li>
 
-                    <li>
+                    <!-- <li>
                         <a href="settings.html"><i class="fa fa-cog"></i> <span>Settings</span></a>
-                    </li>
+                    </li> -->
 
                 </ul>
             </div>

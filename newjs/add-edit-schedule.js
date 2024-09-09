@@ -1,4 +1,3 @@
-
 $("#frm").validate({
     rules :{
         "txtDays" :{
