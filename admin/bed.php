@@ -65,11 +65,10 @@ include("header.php");
                                         echo "<td>" . $row['bed_no'] . "</td>";
                                         echo "<td>" . $row_ward['name'] . "</td>";
                                         echo "<td>" . $row['des'] . "</td>";
-                                        if ($row['status'] == 'Avaliable') {
-                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Avaliable</button></td>";
+                                        if ($row['status'] == 'Available') { // Fixed typo from 'Avaliable' to 'Available'
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Available</button></td>";
                                         } else {
-
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active'  style='border-radius:4px;' data-id='" . $row['id'] . "'>Booked</button></td>";
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Booked</button></td>";
                                         }
                                         echo "<td><a href='add-edit-bed.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";

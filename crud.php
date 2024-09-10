@@ -714,6 +714,189 @@ if ($_GET['what'] == "salId") {
     $response = $id;
     echo json_encode($response);
 }
+// in patient add
+if ($_GET['what'] == "in_patientadd") {
+
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $surgery = $_POST['top'];
+    $surgery_name = $_POST['txtSurname'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+
+
+    $cols = "patient_id,doctor_id,ward_id,a_date,d_date,a_time,d_time,hours,disease,surgery,surgery_name,status";
+    $values = "'$patient','$doctor','$ward','$a_date','$d_date','$a_time','$d_time','$hour','$disease','$surgery','$surgery_name','Admit'";
+
+    if (!empty($bed_no)) {
+        $cols .= ", bed_id";
+        $values .= ", '" . $bed_no . "'";
+    } else {
+        $cols .= ", bed_id";
+        $values .= ", '0'";
+    }
+
+    $query = mysqli_query($cnn, "INSERT INTO in_patient ($cols) VALUES ($values)");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record inserted successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// in patient update
+if ($_GET['what'] == "inpatientupdate") {
+    $id = $_POST['txtUId'];
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $surgery = $_POST['top'];
+    $surgery_name = $_POST['txtSurname'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+    $query = mysqli_query($cnn, "UPDATE in_patient SET 
+        patient_id = '$patient', 
+        doctor_id = '$doctor', 
+        bed_id = '$bed_no', 
+        ward_id = '$ward', 
+        a_date = '$a_date', 
+        d_date = '$d_date', 
+        a_time = '$a_time', 
+        d_time = '$d_time', 
+        hours = '$hour', 
+        disease = '$disease', 
+        surgery = '$surgery', 
+        surgery_name = '$surgery_name'
+    WHERE id = '$id'");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record updated successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+
+    echo json_encode($response);
+}
+// Out patient add
+if ($_GET['what'] == "out_patientadd") {
+
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+
+
+    $cols = "patient_id,doctor_id,ward_id,a_date,d_date,a_time,d_time,hours,disease,status";
+    $values = "'$patient','$doctor','$ward','$a_date','$d_date','$a_time','$d_time','$hour','$disease','Admit'";
+
+    if (!empty($bed_no)) {
+        $cols .= ", bed_id";
+        $values .= ", '" . $bed_no . "'";
+    } else {
+        $cols .= ", bed_id";
+        $values .= ", '0'";
+    }
+
+    $query = mysqli_query($cnn, "INSERT INTO out_patient ($cols) VALUES ($values)");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record inserted successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// out patient update
+if ($_GET['what'] == "outpatientupdate") {
+    $id = $_POST['txtUId'];
+    $patient = $_POST['txtPatient'];
+    $doctor = $_POST['txtDoc'];
+    $bed_no = $_POST['txtBno'];
+    $ward = $_POST['txtWard'];
+    $a_date = $_POST['txtAdate'];
+    $d_date = $_POST['txtDate'];
+    $a_time = $_POST['txtAtime'];
+    $d_time = $_POST['txtTime'];
+    $hour = $_POST['txtHour'];
+    $disease = $_POST['txtDis'];
+
+    $query = mysqli_query($cnn, "UPDATE out_patient SET 
+        patient_id = '$patient', 
+        doctor_id = '$doctor', 
+        bed_id = '$bed_no', 
+        ward_id = '$ward', 
+        a_date = '$a_date', 
+        d_date = '$d_date', 
+        a_time = '$a_time', 
+        d_time = '$d_time', 
+        hours = '$hour', 
+        disease = '$disease'
+    WHERE id = '$id'");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record Updated successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// in patient add
+if ($_GET['what'] == "leaveadd") {
+
+    $name = $_POST['txtDoc'];
+    $department_id = $_POST['txtDep'];
+    $type = $_POST['txtType'];
+    $from_date = $_POST['txtFrom'];
+    $to_date = $_POST['txtTo'];
+    $days = $_POST['txtDay'];
+    $reason = $_POST['txtReason'];
+
+
+
+
+    $cols = "name_id,department_id,type,from_date,to_date,days,reason,status";
+    $values = "'$name','$department_id','$type','$from_date','$to_date','$days','$reason','Pending'";
+
+    $query = mysqli_query($cnn, "INSERT INTO leaves ($cols) VALUES ($values)");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record inserted successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
 
 // Reject appointment
 if ($_GET['what'] == "rejectApp") {
@@ -747,8 +930,6 @@ if ($_GET['what'] == "approveApp") {
 }
 // active  Doctor appointment
 if ($_GET['what'] == "active_app") {
-    // $name = $_POST['name'];
-    // $description = $_POST['description'];
     $id = $_POST['id'];
     $query = mysqli_query($cnn, "update appointment set status='Active' where id=" . $id . "");
     if ($query > 0) {
@@ -762,8 +943,6 @@ if ($_GET['what'] == "active_app") {
 }
 // Block doctor  appointment
 if ($_GET['what'] == "block_App") {
-    // $name = $_POST['name'];
-    // $description = $_POST['description'];
     $id = $_POST['id'];
     $query = mysqli_query($cnn, "update appointment set status='Block' where id=" . $id . "");
     if ($query > 0) {
@@ -802,6 +981,7 @@ if ($_GET['what'] == "addappoi") {
 
     echo json_encode($response);
 }
+// update app
 if ($_GET['what'] == "upappoi") {
     // Sanitize inputs
     $id = $_POST['txtUId'];
@@ -834,39 +1014,162 @@ if ($_GET['what'] == "upappoi") {
 
     echo json_encode($response);
 }
-// update app 
-if ($_GET['what'] == "updatesalary") {
-    // Sanitize inputs
-    $salary_id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
-    $emp_id = mysqli_real_escape_string($cnn, $_POST['txtEmp']);
-    $amount = mysqli_real_escape_string($cnn, $_POST['txtAmt']);
-    $type = mysqli_real_escape_string($cnn, $_POST['txtType']); // Ensure this is sanitized
-    // $pdate = mysqli_real_escape_string($cnn, $_POST['txtDate']);
-    $des = mysqli_real_escape_string($cnn, $_POST['txtDes']);
-
-    // Check if type is selected
-    if (empty($type)) {
-        $response['success'] = false;
-        $response['message'] = "Please select a type.";
-        echo json_encode($response);
-        exit;
-    }
-
-    // Construct the update query
-    $query = "UPDATE salary SET 
-                emp_id = '$emp_id', 
-                amount = '$amount', 
-                type = '$type', 
-                des = '$des'
-              WHERE id = '$salary_id'";
-
-    // Execute the query
-    if (mysqli_query($cnn, $query)) {
+// block holiday
+if ($_GET['what'] == "blockHoliday") {
+    $id = $_POST['id'];
+    $query = mysqli_query($cnn, "UPDATE holidays SET status='Block' WHERE id=" . intval($id));
+    if ($query) {
         $response['success'] = true;
-        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Salary Updated Successfully</span>";
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Holidays blocked successfully</span>";
     } else {
         $response['success'] = false;
-        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error: " . mysqli_error($cnn) . "</span>";
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Some error occurred. Please try again</span>";
+    }
+    echo json_encode($response);
+    exit; // Ensure no further code is executed
+}
+
+// activate holiday
+if ($_GET['what'] == "activeHoliday") {
+    $id = $_POST['id'];
+    $query = mysqli_query($cnn, "UPDATE holidays SET status='Active' WHERE id=" . intval($id));
+    if ($query) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Holidays activated successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Some error occurred. Please try again</span>";
+    }
+    echo json_encode($response);
+    exit; // Ensure no further code is executed
+}
+// in department add
+if ($_GET['what'] == "departmentadd") {
+    $name = $_POST['txtName'];
+
+    $cols = "name,status";
+    $values = "'$name','Active'";
+    $query = mysqli_query($cnn, "INSERT INTO department ($cols) VALUES ($values)");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record inserted successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+    echo json_encode($response);
+}
+// in department update
+if ($_GET['what'] == "departmentupdate") {
+    $id = $_POST['txtUId'];
+    $name = $_POST['txtName'];
+
+
+    $query = mysqli_query($cnn, "UPDATE department SET 
+        name = '$name' WHERE id = '$id'");
+
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Record updated successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span  style='font-weight:100;color:black;font-size:15px;' >Some error occured.Please try again</span>";
+    }
+
+    echo json_encode($response);
+}
+//  holiday add
+if ($_GET['what'] == "holidayadd") {
+    // Sanitize inputs
+    $name = $_POST['txtName'];
+    $date = $_POST['txtDate'];
+
+
+    $cols = "name,date, status";
+    $values = "'$name', '$date', 'Active'";
+    // Construct the query
+    $query = mysqli_query($cnn, "INSERT INTO  holidays ($cols) VALUES ($values)");
+
+    // Execute the query
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Record Inserted Successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error:</span>";
+    }
+
+    echo json_encode($response);
+}
+// in department update
+if ($_GET['what'] == "holidayup") {
+    // Sanitize inputs
+    $id = $_POST['txtUId'];
+    $name = $_POST['txtName'];
+    $date = $_POST['txtDate'];
+
+
+    $query = mysqli_query($cnn, "UPDATE holidays SET 
+    name = '$name', 
+    date = '$date' 
+    WHERE id = '$id'");
+
+    // Execute the query
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Record Updated Successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error:</span>";
+    }
+
+    echo json_encode($response);
+}
+if ($_GET['what'] == "addBed") {
+    // Sanitize inputs
+    $bedno = $_POST['txtNo']; // Ensure this matches the input field ID
+    $ward = $_POST['txtWard'];
+    $room = $_POST['txtType']; // Ensure this matches the input field ID
+    $price = $_POST['txtPrice'];
+    $des = $_POST['txtDes'];
+
+    $cols = "bed_no,ward_id,room_type,price,des,status";
+    $values = "'$bedno', '$ward', '$room','$price','$des','Available'"; // Fixed typo in 'Available'
+    // Construct the query
+    $query = mysqli_query($cnn, "INSERT INTO bed ($cols) VALUES ($values)");
+
+    // Execute the query
+    if ($query) { // Changed to check if query is successful
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Record Inserted Successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error:</span>";
+    }
+
+    echo json_encode($response);
+}
+// update bed
+if ($_GET['what'] == "updateBed") {
+    // Sanitize inputs
+    $uid = $_POST['txtUId'];
+    $bedno = $_POST['txtBedno'];
+    $ward = $_POST['txtWard'];
+    $room = $_POST['txtRoom'];
+    $price = $_POST['txtPrice'];
+    $des = $_POST['txtDes'];
+
+    // Construct the update query
+    $query = mysqli_query($cnn, "UPDATE bed SET bed_no='$bedno', ward_id='$ward', room_type='$room', price='$price', des='$des' WHERE id='$uid'");
+
+    // Check if the query was successful
+    if ($query) {
+        $response['success'] = true;
+        $response['message'] = "Record updated successfully.";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "Error updating record: " . mysqli_error($cnn); // Include error message
     }
 
     echo json_encode($response);
