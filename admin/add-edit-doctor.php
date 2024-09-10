@@ -58,7 +58,7 @@ if (
                 <div class="card pt-5 pb-5 m-auto w-75 ">
                     <div class="row">
                         <div class="col-lg-8 offset-lg-2 m-auto">
-                            <form class="" method="post" enctype="multipart/form-data">
+                            <form class="" method="post" enctype="multipart/form-data" id="frm">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
@@ -121,7 +121,7 @@ if (
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Department</label>
-                                            <select class="select" id="txtDep" name="txtDep">
+                                            <select id="txtDep" name="txtDep"class="form-control" >
                                                 <option value="">Select</option>
                                                 <?php
                                                 $query_dep = mysqli_query($cnn, "SELECT * FROM department");

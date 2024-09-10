@@ -56,7 +56,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -395,6 +395,8 @@ if (
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/select2.min.js"></script>
         <script src="assets/js/app.js"></script>
+        <?php include("included_js.php"); ?>
+        <script type="text/javascript" src="../newjs/ward.js"></script>
 </body>
 
 

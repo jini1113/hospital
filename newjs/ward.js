@@ -74,3 +74,46 @@ $("#tbl_ward").on("click", ".block_active", function () {
         }
     });
 });
+$(document).ready(function () {
+    $("#frm").validate({
+        rules: {
+            "txtName": {
+                required: true,
+                minlength: 3,
+                pattern: "^[a-zA-Z ]{3,}$",
+            },
+            
+            "txtCap": {
+                required: true,
+            },
+            "txtImg":
+            {
+                accept: "jpg,png,jpeg",
+            },
+            
+        },
+        messages: {
+
+            "txtName":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+                minlength: "<span class='text-danger' style='font-size:small;'>This name must be minimum 3 character required.</span>",
+                pattern: "<span class='text-danger' style='font-size:small'>This name must be in capital and small alphabate  only</span>",
+            },
+
+            "txtCap":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+
+            },
+            "txtImg":
+            {
+                accept: "<span class='text-danger' style='font-size:small;'>Image must be in jpg,png or jpeg format </span>",
+            },
+            
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+});

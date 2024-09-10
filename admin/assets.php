@@ -1,5 +1,6 @@
 <?php
 include("../connection.php");
+include("header.php");
 function calculateWarrantyYears($months)
 {
     $years = floor($months / 12);
@@ -13,7 +14,6 @@ function calculateWarrantyYears($months)
         return $months . " month(s)";
     }
 }
-include("header.php");
 
 ?>
 <!DOCTYPE html>

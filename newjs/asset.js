@@ -87,3 +87,115 @@ $("#tbl_asset").on("click", ".block_active", function () {
         }
     });
 });
+$(document).ready(function () {
+    $("#frm").validate({
+        rules: {
+            "txtName": {
+                required: true,
+                minlength: 3,
+                pattern: "^[a-zA-Z ]{3,}$",
+            },
+            "txtS_no": {
+                required: true,
+                
+            },
+            "txtP_dte": {
+                required: true,
+                
+            },
+            "txtP_from": {
+                required: true,
+
+            },
+            "txtMan": {
+                required: true,
+                
+            },
+            "txtModel": {
+                required: true,
+                
+            },
+            "txtSupplier": {
+                required: true,
+                
+            },
+            "txtWar": {
+                required: true,
+                
+            },
+            "txtPrice": {
+                required: true,
+                
+            },
+            "txtImg": {
+                accept: "jpg,png,jpeg",
+            },  
+            "txtDes": {
+                required: true,
+                
+            }
+            
+            
+        },
+        messages: {
+
+            "txtName":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+                minlength: "<span class='text-danger' style='font-size:small;'>This name must be minimum 3 character required.</span>",
+                pattern: "<span class='text-danger' style='font-size:small'>This name must be in capital and small alphabate  only</span>",
+            },
+
+            "txtCap":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+
+            },
+            "txtS_no":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },
+            "txtP_dte":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },  
+            "txtP_from":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },
+            "txtMan":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },  
+            "txtModel":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },
+            "txtSupplier":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },      
+            "txtWar":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },
+            "txtPrice":
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },
+            "txtImg":
+            {
+                accept: "<span class='text-danger' style='font-size:small;'>Image must be in jpg,png or jpeg format </span>",
+            }, 
+            "txtDes"  :
+            {
+                required: "<span class='text-danger'  style='font-size:small'>This feild is required.</span>",
+            },
+            
+            
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+});

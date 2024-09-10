@@ -56,7 +56,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
@@ -114,7 +114,7 @@ if (
                                         </div>
                                     </div>
                                     <div class="m-t-20 text-center">
-                                        <button type="submit"
+                                        <button type="button"
                                             name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             class="btn btn-primary submit-btn">Save
@@ -128,46 +128,46 @@ if (
                         </div>
                         <!-- insert code -->
                         <?php
-                        if (isset($_POST['btnSubmit'])) {
-                            $name = $_POST['txtName'];
-                            $email = $_POST['txtMail'];
-                            $phone = $_POST['txtPhone'];
-                            $group = $_POST['txtGrp'];
-                            $date = $_POST['txtDate'];
+                        // if (isset($_POST['btnSubmit'])) {
+                        //     $name = $_POST['txtName'];
+                        //     $email = $_POST['txtMail'];
+                        //     $phone = $_POST['txtPhone'];
+                        //     $group = $_POST['txtGrp'];
+                        //     $date = $_POST['txtDate'];
 
-                            $cols = "name,email,phone,date,b_group,status";
-                            $values = "'$name','$email','$phone','$date','$group','Donate'";
+                        //     $cols = "name,email,phone,date,b_group,status";
+                        //     $values = "'$name','$email','$phone','$date','$group','Donate'";
 
 
-                            $query = mysqli_query($cnn, "INSERT INTO donor ($cols) VALUES ($values)");
+                        //     $query = mysqli_query($cnn, "INSERT INTO donor ($cols) VALUES ($values)");
 
-                            if ($query) {
+                        //     if ($query) {
 
-                                echo "<script>window.location.replace('donors.php');</script>";
-                            } else {
-                                echo "<script>alert('Some error occurred. Please try again.');</script>";
-                            }
-                        }
-                        // update code
-                        if (isset($_POST['btnUpdate'])) {
-                            $id = $_POST['txtUId'];
-                            $name = $_POST['txtName'];
-                            $email = $_POST['txtMail'];
-                            $phone = $_POST['txtPhone'];
-                            $group = $_POST['txtGrp'];
-                            $date = $_POST['txtDate'];
+                        //         echo "<script>window.location.replace('donors.php');</script>";
+                        //     } else {
+                        //         echo "<script>alert('Some error occurred. Please try again.');</script>";
+                        //     }
+                        // }
+                        // // update code
+                        // if (isset($_POST['btnUpdate'])) {
+                        //     $id = $_POST['txtUId'];
+                        //     $name = $_POST['txtName'];
+                        //     $email = $_POST['txtMail'];
+                        //     $phone = $_POST['txtPhone'];
+                        //     $group = $_POST['txtGrp'];
+                        //     $date = $_POST['txtDate'];
 
-                            $cols = "name='" . $name . "',phone=" . $phone . ",b_group='" . $group . "',date='" . $date . "'";
+                        //     $cols = "name='" . $name . "',phone=" . $phone . ",b_group='" . $group . "',date='" . $date . "'";
 
                           
 
-                            $query = mysqli_query($cnn, "update donor set " . $cols . " where id=" . $id . "");
-                            if ($query > 0) {
-                                echo "<script>window.location.replace('donors.php');</script>";
-                            } else {
-                                echo "<script>alert('Some error occured.Please try again');</script>";
-                            }
-                        }
+                        //     $query = mysqli_query($cnn, "update donor set " . $cols . " where id=" . $id . "");
+                        //     if ($query > 0) {
+                        //         echo "<script>window.location.replace('donors.php');</script>";
+                        //     } else {
+                        //         echo "<script>alert('Some error occured.Please try again');</script>";
+                        //     }
+                        // }
 
 
                         ?>
@@ -399,12 +399,16 @@ if (
         </div>
     </div>
     <div class="sidebar-overlay" data-reff=""></div>
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.slimscroll.js"></script>
-    <script src="assets/js/select2.min.js"></script>
-    <script src="assets/js/app.js"></script>
+            <script src="assets/js/jquery-3.2.1.min.js"></script>
+            <script src="assets/js/popper.min.js"></script>
+            <script src="assets/js/bootstrap.min.js"></script>
+            <script src="assets/js/jquery.slimscroll.js"></script>
+            <script src="assets/js/select2.min.js"></script>
+            <script src="assets/js/app.js"></script>
+            <script src="assets/js/moment.min.js"></script>
+            <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+            <?php include("included_js.php"); ?>
+            <script src="../newjs/donor.js"></script>
 </body>
 
 
