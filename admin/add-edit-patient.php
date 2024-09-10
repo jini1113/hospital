@@ -1,6 +1,5 @@
 <?php
 include("../connection.php");
-session_start();
 include("header.php");
 session_start();
 if (
@@ -12,8 +11,6 @@ if (
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
-
 <!-- add-patient24:06-->
 
 <head>

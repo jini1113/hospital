@@ -448,16 +448,6 @@ if (isset($_GET['id'])) {
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <!-- <script>
-        $(function () {
-            $('#datetimepicker3').datetimepicker({
-                format: 'LT'
-            });
-            $('#datetimepicker4').datetimepicker({
-                format: 'LT'
-            });
-        });
-        </script> -->
     <?php include("included_js.php"); ?>
     <script src="../newjs/add-edit-schedule.js"></script>
 </body>

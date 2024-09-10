@@ -366,7 +366,7 @@ include("header.php");
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/js/app.js"></script>
     <?php include("included_js.php"); ?>
-    <script type="text/javascript" src="../newjs/schedule.js"></script>
+    <script type="text/javascript" src="../newjs/add-edit-schedule.js"></script>
     <script>
         $(document).ready(function () {
             $('#tbl_schedule').DataTable({

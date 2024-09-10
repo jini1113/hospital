@@ -72,7 +72,7 @@ if (
                                                 <input id="txtUId" name="txtUId" value="<?php if (isset($_GET['id'])) {
                                                     echo $row['id'];
                                                 } ?>" hidden />
-                                                <label>Bed No. <span class="text-danger">*</span></label>
+                                                <label>Bed No.</label>
                                                 <input type="text" id="txtNo" name="txtNo" class="form-control" value="<?php if (isset($_GET['id'])) {
                                                     echo $row['bed_no'];
                                                 } ?>" />

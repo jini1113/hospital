@@ -1,3 +1,35 @@
+$("#frm").validate({
+    rules: {
+        "txtEmp": {
+            required: true,
+        },
+        "txtAmt": {
+            required: true,
+        },
+        "txtType": {
+            required: true,
+        },
+        "txtDes": {
+            required: true,
+        },
+    },
+    messages: {
+        "txtEmp": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtAmt": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtType": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtDes": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+
+    },
+});
 //add salary
 $("#btnSubmit").click(function (event) {
     event.preventDefault();

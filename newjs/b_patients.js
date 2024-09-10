@@ -1,3 +1,40 @@
+$("#frm").validate({
+    rules :{
+        "txtPatient" :{
+            required: true,
+        },
+        "txtWard" :{
+            required: true,
+        },
+        "txtBno" :{
+            required: true,
+        },
+        "txtAdate" :{
+            required: true,
+        },
+        "txtDate" :{
+            required: true,
+        },
+    },
+    messages: {
+        "txtPatient": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtWard": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtBno": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtAdate": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtDate": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+       
+    },
+});
 $("#txtWard").on("change", function () {
     const wardId = $(this).val();
     $.ajax({

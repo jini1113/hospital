@@ -1,3 +1,41 @@
+$("#frm").validate({
+    rules: {
+        "txtWard": {
+            required: true,
+        },
+        "txtNo": {
+            required: true,
+        },
+        "txtType": {
+            required: true,
+        },
+        "txtPrice": {
+            required: true,
+        },
+        "txtDes": {
+            required: true,
+        },
+    },
+    messages: {
+        "txtWard": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtNo": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtType": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtPrice": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtDes": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+
+    },
+});
 // block ward
 $("#tbl_bed").on("click", ".active_block", function () {
     const json = { "id": $(this).attr("data-id") };

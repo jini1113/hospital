@@ -775,4 +775,100 @@ if ($_GET['what'] == "block_App") {
     }
     echo json_encode($response);
 }
+// add app
+if ($_GET['what'] == "addappoi") {
+    // Sanitize inputs
+    $patient_id = $_POST['txtPatient'];
+    $phone_no = $_POST['txtPhone'];
+    $email = $_POST['txtMail'];
+    $doctor_id = $_POST['txtDoc'];
+    $date = $_POST['txtDate'];
+    $time = $_POST['txtTime'];
+    $message = $_POST['txtMsg'];
+
+    $cols = "patient_id,phone_no,email,doctor_id,date,time, message, status";
+    $values = "'$patient_id', '$phone_no', '$email', '$doctor_id', '$date', '$time', '$message', 'Active'";
+    // Construct the query
+    $query = mysqli_query($cnn, "INSERT INTO  appointment ($cols) VALUES ($values)");
+
+    // Execute the query
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Record Inserted Successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error:</span>";
+    }
+
+    echo json_encode($response);
+}
+if ($_GET['what'] == "upappoi") {
+    // Sanitize inputs
+    $id = $_POST['txtUId'];
+    $patient_id = $_POST['txtPatient'];
+    $phone_no = $_POST['txtPhone'];
+    $email = $_POST['txtMail'];
+    $doctor_id = $_POST['txtDoc'];
+    $date = $_POST['txtDate'];
+    $time = $_POST['txtTime'];
+    $message = $_POST['txtMsg'];
+
+    $query = mysqli_query($cnn, "UPDATE appointment SET 
+    patient_id = '$patient_id', 
+    phone_no = '$phone_no', 
+    email = '$email', 
+    doctor_id = '$doctor_id', 
+    date = '$date', 
+    time = '$time', 
+    message = '$message' 
+    WHERE id = '$id'");
+
+    // Execute the query
+    if ($query > 0) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Record Updated Successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error:</span>";
+    }
+
+    echo json_encode($response);
+}
+// update app 
+if ($_GET['what'] == "updatesalary") {
+    // Sanitize inputs
+    $salary_id = mysqli_real_escape_string($cnn, $_POST['txtUId']);
+    $emp_id = mysqli_real_escape_string($cnn, $_POST['txtEmp']);
+    $amount = mysqli_real_escape_string($cnn, $_POST['txtAmt']);
+    $type = mysqli_real_escape_string($cnn, $_POST['txtType']); // Ensure this is sanitized
+    // $pdate = mysqli_real_escape_string($cnn, $_POST['txtDate']);
+    $des = mysqli_real_escape_string($cnn, $_POST['txtDes']);
+
+    // Check if type is selected
+    if (empty($type)) {
+        $response['success'] = false;
+        $response['message'] = "Please select a type.";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Construct the update query
+    $query = "UPDATE salary SET 
+                emp_id = '$emp_id', 
+                amount = '$amount', 
+                type = '$type', 
+                des = '$des'
+              WHERE id = '$salary_id'";
+
+    // Execute the query
+    if (mysqli_query($cnn, $query)) {
+        $response['success'] = true;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Salary Updated Successfully</span>";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "<span style='font-weight:100;color:black;font-size:15px;'>Error: " . mysqli_error($cnn) . "</span>";
+    }
+
+    echo json_encode($response);
+}
 ?>

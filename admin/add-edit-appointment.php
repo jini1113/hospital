@@ -1,6 +1,5 @@
 <?php
 include("../connection.php");
-session_start();
 include("header.php");
 session_start();
 if (
@@ -58,7 +57,7 @@ if (
                 <div class="card pt-5 pb-5 m-auto w-75 ">
                     <div class="row">
                         <div class="col-lg-8 offset-lg-2">
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post" enctype="multipart/form-data" id="frm">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -130,28 +129,6 @@ if (
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Department</label>
-                                            <select class="select" id="txtDep" name="txtDep">
-                                                <option value="">Select</option>
-                                                <?php
-                                                $query_dep = mysqli_query($cnn, "SELECT * FROM department");
-                                                while ($row_dep = mysqli_fetch_array($query_dep)) {
-                                                    echo "<option value='" . $row_dep['id'] . "'";
-                                                    if (isset($_GET['id'])) {
-                                                        // Assuming $row is defined earlier and contains the data of the item being edited
-                                                        if ($row['department_id'] == $row_dep['id']) {
-                                                            echo " selected";
-                                                        }
-                                                    }
-                                                    echo ">" . $row_dep['name'] . "</option>";
-                                                }
-                                                ?>
-
-                                            </select>
-                                        </div>
-                                    </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -190,53 +167,6 @@ if (
                                 </div>
                             </form>
                         </div>
-                        <!-- insert code -->
-                        <?php
-                        if (isset($_POST['btnSubmit'])) {
-                            $name = $_POST['txtPatient'];
-                            $email = $_POST['txtMail'];
-                            $phone = $_POST['txtPhone'];
-                            // $department = $_POST['txtDep'];
-                            $doctor = $_POST['txtDoc'];
-                            $date = $_POST['txtDate'];
-                            $time = $_POST['txtTime'];
-                            $msg = $_POST['txtMsg'];
-
-                            $cols = "patient_id,email,phone_no,date,time,doctor_id,message, status";
-                            $values = "'$name', '$email','$phone','$date','$time','$doctor','$msg','Active'";
-                            $query = mysqli_query($cnn, "INSERT INTO appointment ($cols) VALUES ($values)");
-
-                            if ($query) {
-                                echo "<script>window.location.replace('appointments.php');</script>";
-                            } else {
-                                echo "<script>alert('Some error occurred. Please try again.');</script>";
-                            }
-                        }
-                         // update code
-                         if (isset($_POST['btnUpdate'])) {
-                            $id = $_POST['txtUId'];
-                            $name = $_POST['txtPatient'];
-                            $email = $_POST['txtMail'];
-                            $phone = $_POST['txtPhone'];
-                            $department = $_POST['txtDep'];
-                            $doctor = $_POST['txtDoc'];
-                            $date = $_POST['txtDate'];
-                            $time = $_POST['txtTime'];
-                            $msg = $_POST['txtMsg'];
-
-
-                         
-                            
-                            $cols .= "patient_id='" . $name . "',phone_no='" . $phone . "',date='" . $date . "',time='" . $time . "',doctor_id='" . $doctor . "',department_id='" . $department . "',message='" . $msg . "'";
-                            $query = mysqli_query($cnn, "update appointment set " . $cols . " where id=" . $id . "");
-                            if ($query > 0) {
-                                echo "<script>window.location.replace('appointments.php');</script>";
-                            } else {
-                                echo "<script>alert('Some error occured.Please try again');</script>";
-                            }
-                        }
-
-                        ?>
                     </div>
                 </div>
                 <div class="notification-box">
@@ -473,6 +403,8 @@ if (
         <script src="assets/js/moment.min.js"></script>
         <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
         <script src="assets/js/app.js"></script>
+        <?php include("included_js.php"); ?>
+    <script src="../newjs/app.js"></script>
 
 </body>
 
