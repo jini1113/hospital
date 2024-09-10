@@ -253,6 +253,9 @@ include("../connection.php");
                                 <li><a href="blood-issue.php"> Blood Issue </a></li>
                             </ul>
                         </li>
+                        <li>
+                        <a href="leave.php"><i class="fa fa-calendar"></i> <span>Leave</span></a>
+                    </li>
 
 
                 </ul>

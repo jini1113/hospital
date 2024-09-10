@@ -56,9 +56,9 @@ include("header.php");
                     <div class="col-sm-8 col-6">
                         <h4 class="page-title">Leave Request</h4>
                     </div>
-                    <div class="col-sm-4 col-6 text-right m-b-30">
+                    <!-- <div class="col-sm-4 col-6 text-right m-b-30">
                         <a href="add-edit-leave.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Leave</a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -80,16 +80,20 @@ include("header.php");
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = mysqli_query($cnn, "SELECT * FROM leaves");
+                                    $query = mysqli_query($cnn, "SELECT l.*,d.name AS department_name,doc.name AS doctor_name FROM `leaves` AS l
+                                            JOIN
+                                                department AS d ON l.department_id = d.id
+                                            JOIN
+                                                staff AS doc ON l.name_id = doc.id");
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_array($query)) {
-                                        $query_dep = mysqli_query($cnn, "SELECT * FROM department WHERE id='" . $row['department_id'] . "'");
-                                        $row_dep = mysqli_fetch_array($query_dep);
+                                        // $query_dep = mysqli_query($cnn, "SELECT * FROM department WHERE id='" . $row['department_id'] . "'");
+                                        // $row_dep = mysqli_fetch_array($query_dep);
 
                                         echo "<tr>";
                                         echo "<td>" . $cnt . "</td>";
-                                        echo "<td>" . $row['name'] . "</td>";
-                                        echo "<td>" . $row_dep['name'] . "</td>";
+                                        echo "<td>" . $row['doctor_name'] . "</td>";
+                                        echo "<td>" . $row['department_name'] . "</td>";
                                         echo "<td>" . $row['type'] . "</td>";
                                         echo "<td>" . $row['from_date'] . "</td>";
                                         echo "<td>" . $row['to_date'] . "</td>";
