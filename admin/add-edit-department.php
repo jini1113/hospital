@@ -56,7 +56,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="form-group">
                                         <label>Department Name </label>
                                         <input id="txtUId" name="txtUId" value="<?php if (isset($_GET['id'])) {
@@ -68,7 +68,7 @@ if (
                                             } ?>">
                                     </div>
                                     <div class="m-t-20 text-center">
-                                    <button type="submit"
+                                    <button type="button"
                                             name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             class="btn btn-primary submit-btn">Save
@@ -78,47 +78,47 @@ if (
                             </div>
                             <!-- insert code -->
                             <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $name = $_POST['txtName'];
+                            // if (isset($_POST['btnSubmit'])) {
+                            //     $name = $_POST['txtName'];
                             
-                                $chk_user = mysqli_query($cnn, "SELECT COUNT(*) FROM department WHERE name = '$name'");
-                                $row_user = mysqli_fetch_array($chk_user);
+                            //     $chk_user = mysqli_query($cnn, "SELECT COUNT(*) FROM department WHERE name = '$name'");
+                            //     $row_user = mysqli_fetch_array($chk_user);
 
-                                if ($row_user[0] > 0) {
-                                    echo "<script>alert('This role id is already inserted.');</script>";
-                                } else {
+                            //     if ($row_user[0] > 0) {
+                            //         echo "<script>alert('This role id is already inserted.');</script>";
+                            //     } else {
 
 
-                                    $cols = "name,status";
-                                    $values = "'$name','Active'";
+                            //         $cols = "name,status";
+                            //         $values = "'$name','Active'";
 
                                    
-                                    $query = mysqli_query($cnn, "INSERT INTO department ($cols) VALUES ($values)");
+                            //         $query = mysqli_query($cnn, "INSERT INTO department ($cols) VALUES ($values)");
 
-                                    if ($query) {
+                            //         if ($query) {
 
-                                        echo "<script>window.location.replace('role.php');</script>";
-                                    } else {
-                                        echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                    }
-                                }
-                            }
-                             // update code
-                             if (isset($_POST['btnUpdate'])) {
-                                $id = $_POST['txtUId'];
-                                $name = $_POST['txtName'];
+                            //             echo "<script>window.location.replace('role.php');</script>";
+                            //         } else {
+                            //             echo "<script>alert('Some error occurred. Please try again.');</script>";
+                            //         }
+                            //     }
+                            // }
+                            //  // update code
+                            //  if (isset($_POST['btnUpdate'])) {
+                            //     $id = $_POST['txtUId'];
+                            //     $name = $_POST['txtName'];
                                
-                                $cols = "name='" . $name . "'";
+                            //     $cols = "name='" . $name . "'";
 
 
 
-                                $query = mysqli_query($cnn, "update department set " . $cols . " where id=" . $id . "");
-                                if ($query > 0) {
-                                    echo "<script>window.location.replace('department.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occured.Please try again');</script>";
-                                }
-                            }
+                            //     $query = mysqli_query($cnn, "update department set " . $cols . " where id=" . $id . "");
+                            //     if ($query > 0) {
+                            //         echo "<script>window.location.replace('department.php');</script>";
+                            //     } else {
+                            //         echo "<script>alert('Some error occured.Please try again');</script>";
+                            //     }
+                            // }
 
                             ?>
                         </div>
@@ -349,12 +349,16 @@ if (
             </div>
         </div>
         <div class="sidebar-overlay" data-reff=""></div>
-        <script src="assets/js/jquery-3.2.1.min.js"></script>
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/jquery.slimscroll.js"></script>
-        <script src="assets/js/select2.min.js"></script>
-        <script src="assets/js/app.js"></script>
+            <script src="assets/js/jquery-3.2.1.min.js"></script>
+            <script src="assets/js/popper.min.js"></script>
+            <script src="assets/js/bootstrap.min.js"></script>
+            <script src="assets/js/jquery.slimscroll.js"></script>
+            <script src="assets/js/select2.min.js"></script>
+            <script src="assets/js/app.js"></script>
+            <script src="assets/js/moment.min.js"></script>
+            <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+            <?php include("included_js.php"); ?>
+            <script src="../newjs/department.js"></script>
 </body>
 
 

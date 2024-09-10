@@ -256,6 +256,9 @@ include("../connection.php");
                         <li>
                         <a href="leave.php"><i class="fa fa-calendar"></i> <span>Leave</span></a>
                     </li>
+                    <li>
+                        <a href="holidays.php"><i class="fa fa-calendar"></i> <span>Holidays</span></a>
+                    </li>
 
 
                 </ul>
