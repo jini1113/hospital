@@ -265,6 +265,10 @@ if (
                     <li>
                         <a href="holidays.php"><i class="fa fa-calendar"></i> <span>Holidays</span></a>
                     </li>
+                    <li>
+                        <a href="salary.php"><i class="fa fa-rupee"></i> <span>Salary</span></a>
+                    </li>
+
 
                        
                     </ul>

@@ -68,7 +68,7 @@ if (
                                                 <select class="select" id="txtEmp" name="txtEmp">
                                                     <option value="">Select</option>
                                                     <?php
-                                                    $query_emp = mysqli_query($cnn, "SELECT * FROM staff where role='Staff'");
+                                                    $query_emp = mysqli_query($cnn, "SELECT * FROM staff where role IN ('Staff', 'Doctor')");
                                                     while ($row_emp = mysqli_fetch_array($query_emp)) {
                                                         echo "<option value='" . $row_emp['id'] . "'";
                                                         if (isset($_GET['id'])) {

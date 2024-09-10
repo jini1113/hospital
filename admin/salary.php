@@ -60,7 +60,7 @@ include("header.php");
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_array($query)) {
 
-                                        $query_emp = mysqli_query($cnn, "select * from staff where role='Staff' AND id=" . $row['emp_id'] . "");
+                                        $query_emp = mysqli_query($cnn, "select * from staff where id=" . $row['emp_id'] . "");
                                         $row_emp = mysqli_fetch_array($query_emp);
 
                                         echo "<tr>";
@@ -71,7 +71,7 @@ include("header.php");
                                         echo "<td>" . $row['pdate'] . "</td>";
                                         echo "<td>" . $row['des'] . "</td>";
                                         if ($row['status'] == 'Pending') {
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' data-toggle='modal' data-target='#paidModal' style='border-radius:4px;' data-id=" . $row['id'] . ">Pending</button></td>";
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-warning block_active' data-toggle='modal' data-target='#paidModal' style='border-radius:4px;' data-id=" . $row['id'] . ">Pending</button></td>";
                                             // echo "<td>" . $row['id'] . "</td>";
                                     
                                         } else {
@@ -113,33 +113,7 @@ include("header.php");
                 </div>
             </div>
 
-            <!--Unpaid Modal -->
-            <div class="modal fade" id="paidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="frm">
-                                <div class="fomr-group">
-                                    <input id="txtUId" name="txtUId" hidden />
-                                    <label>Paid Date :</label>
-                                    <input type="date" class="form-control" id="txtDte" name="txtDte" />
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" id="btnSave" name="btnSave" class="btn add">Save changes</button>
-                            <button type="button" class="btn back" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="notification-box">
                 <div class="msg-sidebar notifications msg-noti">
