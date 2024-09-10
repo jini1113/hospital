@@ -57,7 +57,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <input id="txtUId" name="txtUId" value="<?php if (isset($_GET['id'])) {
@@ -87,42 +87,7 @@ if (
                                     </div>
                                 </form>
                             </div>
-                            <!-- insert code -->
-                            <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $name = $_POST['txtName'];
-                                $date = $_POST['txtDate'];
 
-                                $cols = "name,date";
-                                $values = "'$name','$date'";
-                                $query = mysqli_query($cnn, "INSERT INTO holidays ($cols) VALUES ($values)");
-
-                                if ($query) {
-                                    echo "<script>window.location.replace('holidays.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                }
-                            }
-                            // update code
-                            if (isset($_POST['btnUpdate'])) {
-                                $id = $_POST['txtUId'];
-                                $name = $_POST['txtName'];
-                                $date = $_POST['txtDate'];
-                                // $day = $_POST['txtDay'];
-                            
-                                $cols = "name='" . $name . "',date='" . $date . "'";
-
-
-
-                                $query = mysqli_query($cnn, "update holidays set " . $cols . " where id=" . $id . "");
-                                if ($query > 0) {
-                                    echo "<script>window.location.replace('holidays.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occured.Please try again');</script>";
-                                }
-                            }
-
-                            ?>
                         </div>
                     </div>
                 </div>

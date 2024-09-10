@@ -57,6 +57,7 @@ include("header.php");
                                         <th>Name</th>
                                         <th>Date</th>
                                         <th>Day</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -76,6 +77,11 @@ include("header.php");
                                         echo "<td>" . $row['name'] . "</td>";
                                         echo "<td>" . $date->format('d-m-Y') . "</td>";
                                         echo "<td>" . $dayOfWeek . "</td>";
+                                        if ($row['status'] == 'Active') {
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
+                                        } else {
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                        }
                                         if ($isDisabled) {
                                             echo "<td><button type='button' class='btn btn-link' disabled><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;color:gray;'></i></button></td>";
                                         } else {
@@ -104,6 +110,7 @@ include("header.php");
     <!-- DataTables JS -->
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="../newjs/holiday.js"></script>
     <script>
         $(document).ready(function () {
             $('#tbl_holiday').DataTable({
@@ -119,6 +126,8 @@ include("header.php");
             });
         });
     </script>
+        <?php include("included_js.php"); ?>
+
 </body>
 
 </html>

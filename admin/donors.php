@@ -42,7 +42,7 @@ include("header.php");
                         <h4 class="page-title">Blood Donors</h4>
                     </div>
                     <div class="col-sm-7 col-7 text-right m-b-30">
-                        <a href="add-donor.php" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i>Add
+                        <a href="add-edit-donor.php" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i>Add
                             Blood Donors</a>
                     </div>
                 </div>
