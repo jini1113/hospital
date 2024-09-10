@@ -75,9 +75,7 @@ $("#txtWard").on("change", function () {
             }
             $("#txtBno").html(s); // Update the Bed No. dropdown
         },
-        error: function (xhr, status, error) {
-            console.error("Error fetching beds:", error); // Log error
-        }
+        
     });
 });
 // Add b_patients

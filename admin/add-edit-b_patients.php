@@ -69,7 +69,7 @@ if (isset($_GET['id'])) {
                                                 <input id="txtUId" name="txtUId" value="<?php echo $row['id']; ?>"
                                                     hidden />
                                                 <label>Patient Name</label>
-                                                <select class="select" id="txtPatient" name="txtPatient">
+                                                <select id="txtPatient" name="txtPatient" class="form-control">
                                                     <option value="">Select</option>
                                                     <?php
                                                     $patient_query = mysqli_query($cnn, "SELECT * FROM patients");
@@ -84,7 +84,7 @@ if (isset($_GET['id'])) {
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label>Ward</label>
-                                                <select class="select" id="txtWard" name="txtWard">
+                                                <select id="txtWard" name="txtWard" class="form-control">
                                                     <option value="">Select</option>
                                                     <?php
                                                     $wards_query = mysqli_query($cnn, "SELECT * FROM ward");
@@ -103,7 +103,7 @@ if (isset($_GET['id'])) {
                                                     <option value="">Select</option>
                                                     <?php
                                                     if (isset($current_bed_id)) {
-                                                        $bed_query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id=" . $current_ward);
+                                                        $bed_query = mysqli_query($cnn, "SELECT * FROM bed WHERE ward_id=" . $current_ward . "");
                                                         while ($bed = mysqli_fetch_array($bed_query)) {
                                                             $selected = ($current_bed_id == $bed['id']) ? "selected" : "";
                                                             echo "<option value='" . $bed['id'] . "' $selected>" . $bed['name'] . "</option>";
@@ -133,7 +133,7 @@ if (isset($_GET['id'])) {
                                     </div>
 
                                     <div class="m-t-20 text-center">
-                                        <button type="submit"
+                                        <button type="button"
                                             name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             class="btn btn-primary submit-btn">Save

@@ -136,11 +136,6 @@ $("#btnUpdate").click(function (event) {
 
                 }
             },
-            error: function (xhr, status, error) {
-                console.error("Ajax error:", status, error);
-                console.log("Response text:", xhr.responseText);
-                alert("An error occurred. Please check the console for details.");
-            }
         });
     }
 });

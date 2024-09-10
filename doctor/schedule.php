@@ -81,10 +81,11 @@ include("header.php");
                                        echo "<td>" . $row['to_time'] . "</td>";
                                        echo "<td>" . $row['message'] . "</td>";
                                        if ($row['status'] == 'Active') {
-                                           echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block' style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
-                                       } else {
-                                           echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
-                                       }
+                                        // echo "<td>" . $row['id'] . "</td>";
+                                        echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block'  style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
+                                    } else {
+                                        echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                    }
                                        echo "<td><a href='add-edit-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit' class='btn btn-link'><i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a>";
                                        echo "<a href='delete-schedule.php?id=" . $row['id'] . "'><button type='button' id='btnDelete' name='btnDelete' title='Delete' class='btn btn-link' data-target='#delete-modal' data-toggle='modal'><i class='fa fa-trash-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
 
@@ -365,7 +366,7 @@ include("header.php");
     <script src="../admin/assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="../admin/assets/js/app.js"></script>
     <?php include("included_js.php"); ?>
-    <script type="text/javascript" src="../newjs/schedule.js"></script>
+    <script type="text/javascript" src="../newjs/add-edit-schedule.js"></script>
     <script>
         $(document).ready(function () {
             $('#tbl_schedule').DataTable({
