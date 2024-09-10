@@ -56,7 +56,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="form-group">
                                         <input id="txtUId" name="txtUId" value="<?php if (isset($_GET['id'])) {
                                             echo $row['id'];
@@ -68,13 +68,13 @@ if (
                                     </div>
                                     <div class="form-group">
                                         <label>Tax Percentage(%)</label>
-                                        <input class="form-control" type="text" id="txtPer" name="txtPer"  value="<?php if (isset($_GET['id'])) {
-                                                        echo $row['percentage'];
-                                                    } ?>">
+                                        <input class="form-control" type="text" id="txtPer" name="txtPer" value="<?php if (isset($_GET['id'])) {
+                                            echo $row['percentage'];
+                                        } ?>">
                                     </div>
-                                    
+
                                     <div class="m-t-20 text-center">
-                                    <button type="submit"
+                                        <button type="submit"
                                             name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             class="btn btn-primary submit-btn">Save
@@ -82,42 +82,6 @@ if (
                                     </div>
                                 </form>
                             </div>
-                            <!-- insert code -->
-                            <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $name = $_POST['txtName'];
-                                $percentage = $_POST['txtPer'];
-
-                                $cols = "name,percentage,status";
-                                $values = "'$name','$percentage','Active'";
-                                $query = mysqli_query($cnn, "INSERT INTO tax ($cols) VALUES ($values)");
-
-                                if ($query) {
-
-                                    echo "<script>window.location.replace('taxes.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                }
-                            }
-                             // update code
-                             if (isset($_POST['btnUpdate'])) {
-                                $id = $_POST['txtUId'];
-                                $name = $_POST['txtName'];
-                                $per = $_POST['txtPer'];
-                               
-                                $cols = "name='" . $name . "',percentage='" . $per . "'";
-
-
-
-                                $query = mysqli_query($cnn, "update tax set " . $cols . " where id=" . $id . "");
-                                if ($query > 0) {
-                                    echo "<script>window.location.replace('taxes.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occured.Please try again');</script>";
-                                }
-                            }
-
-                            ?>
                         </div>
                     </div>
                 </div>
@@ -352,6 +316,8 @@ if (
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/select2.min.js"></script>
         <script src="assets/js/app.js"></script>
+        <?php include("included_js.php"); ?>
+        <script src="../newjs/tax.js"></script>
 </body>
 
 

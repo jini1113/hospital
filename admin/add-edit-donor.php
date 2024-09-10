@@ -126,51 +126,6 @@ if (
                             </div>
                             </form>
                         </div>
-                        <!-- insert code -->
-                        <?php
-                        // if (isset($_POST['btnSubmit'])) {
-                        //     $name = $_POST['txtName'];
-                        //     $email = $_POST['txtMail'];
-                        //     $phone = $_POST['txtPhone'];
-                        //     $group = $_POST['txtGrp'];
-                        //     $date = $_POST['txtDate'];
-
-                        //     $cols = "name,email,phone,date,b_group,status";
-                        //     $values = "'$name','$email','$phone','$date','$group','Donate'";
-
-
-                        //     $query = mysqli_query($cnn, "INSERT INTO donor ($cols) VALUES ($values)");
-
-                        //     if ($query) {
-
-                        //         echo "<script>window.location.replace('donors.php');</script>";
-                        //     } else {
-                        //         echo "<script>alert('Some error occurred. Please try again.');</script>";
-                        //     }
-                        // }
-                        // // update code
-                        // if (isset($_POST['btnUpdate'])) {
-                        //     $id = $_POST['txtUId'];
-                        //     $name = $_POST['txtName'];
-                        //     $email = $_POST['txtMail'];
-                        //     $phone = $_POST['txtPhone'];
-                        //     $group = $_POST['txtGrp'];
-                        //     $date = $_POST['txtDate'];
-
-                        //     $cols = "name='" . $name . "',phone=" . $phone . ",b_group='" . $group . "',date='" . $date . "'";
-
-                          
-
-                        //     $query = mysqli_query($cnn, "update donor set " . $cols . " where id=" . $id . "");
-                        //     if ($query > 0) {
-                        //         echo "<script>window.location.replace('donors.php');</script>";
-                        //     } else {
-                        //         echo "<script>alert('Some error occured.Please try again');</script>";
-                        //     }
-                        // }
-
-
-                        ?>
                     </div>
                 </div>
             </div>
