@@ -92,12 +92,13 @@ include("header.php");
                                             mysqli_query($cnn, $quer);
                                         }
 
-                                        if ($row['status'] == 'Admit') {
-                                            echo "<td><button type='button' class='btn custom-badge status-green active_block action-button' style='border-radius:4px;' data-id='" . $row['id'] . "'>Admit</button></td>";
-                                        } else {
-                                            echo "<td><button type='button' class='btn custom-badge status-red block_active action-button' style='border-radius:4px;' data-id='" . $row['id'] . "'>Discharge</button></td>";
-                                        }
 
+                                        if ($row['status'] == 'Admit') {
+                                            // echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Admit</button></td>";
+                                        } else {
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Discharge</button></td>";
+                                        }
                                         echo "<td><a href='add-edit-b_patients.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                         // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";

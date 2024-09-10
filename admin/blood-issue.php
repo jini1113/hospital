@@ -39,7 +39,7 @@ include("header.php");
             <div class="content">
                 <div class="row">
                     <div class="col-sm-5 col-5">
-                        <h4 class="page-title">Blood Donors</h4>
+                        <h4 class="page-title">Blood Issues</h4>
                     </div>
                     <div class="col-sm-7 col-7 text-right m-b-30">
                         <a href="add-edit-issue.php" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Add
@@ -59,6 +59,7 @@ include("header.php");
                                         <th>Donor Name</th>
                                         <th>Blood Group</th>
                                         <th>Amount</th>
+                                        <th>Description</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -85,6 +86,11 @@ include("header.php");
                                         echo "<td>" . $row['group'] . "</td>";
                                         echo "<td>" . $row['amount'] . "</td>";
                                         echo "<td>" . $row['des'] . "</td>";
+                                        if ($row['status'] == 'Active') {
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Active</button></td>";
+                                        } else {
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                        }
                                         echo "<td><a href='add-edit-issue.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                         // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";
@@ -362,7 +368,7 @@ include("header.php");
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/js/jquery.slimscroll.js"></script>
     <script src="assets/js/app.js"></script>
-    <script type="text/javascript" src="../newjs/donor.js"></script>
+    <script type="text/javascript" src="../newjs/issue.js"></script>
     <script type="text/javascript">
         $("#tbl_issue").DataTable();
     </script>

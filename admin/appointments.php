@@ -87,11 +87,12 @@ include("header.php");
                                         echo "<td>" . $row_doc['name'] . "</td>";
                                         echo "<td>" . $row['message'] . "</td>";
                                         if ($row['status'] == 'Active') {
-                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
+                                            // echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Active</button></td>";
                                         } else {
-
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active'  style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
                                         }
+
                                         echo "<td><a href='add-edit-appointment.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                         // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";

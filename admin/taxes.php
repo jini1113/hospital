@@ -67,11 +67,12 @@ include("header.php");
                                         echo "<td>" . $row['name'] . "</td>";
                                         echo "<td>" . $row['percentage'] . "</td>";
                                         if ($row['status'] == 'Active') {
-                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
+                                            // echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Active</button></td>";
                                         } else {
-
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active'  style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
                                         }
+
                                         echo "<td><a href='add-edit-tax.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
 
@@ -351,7 +352,7 @@ include("header.php");
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="assets/js/app.js"></script>
     <?php include("included_js.php"); ?>
-    <script type="text/javascript" src="../newjs/schedule.js"></script>
+    <script type="text/javascript" src="../newjs/tax.js"></script>
     <script>
         $(document).ready(function () {
             $('#tbl_tax').DataTable({

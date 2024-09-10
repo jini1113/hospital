@@ -3,13 +3,25 @@ $("#frm").validate({
         "txtDoc": {
             required: true,
         },
-        "txtDays": {
+        "txtPatient": {
             required: true,
         },
-        "txtFtime": {
+        "txtMail":
+            {
+                required: true,
+                email: true,
+            },
+            "txtPhone":
+            {
+                required: true,
+                minlength: 10,
+                maxlength: 10,
+                pattern: "^[0-9]{10}$",
+            },
+        "txtDate": {
             required: true,
         },
-        "txtTotime": {
+        "txtTime": {
             required: true,
         },
         "txtMsg": {
@@ -20,13 +32,25 @@ $("#frm").validate({
         "txtDoc": {
             required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
         },
-        "txtDays": {
+        "txtPatient": {
             required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
         },
-        "txtFtime": {
+        "txtMail":
+        {
+            required: "<span class='text-danger' style='font-size:small'>This feild is required.</span>",
+            email: "<span class='text-danger' style='font-size:small;'>Your email address must be in this format name@domain.com</span>",
+        },
+        "txtPhone":
+        {
+            required: "<span class='text-danger' style='font-size:small'>This feild is required.</span>",
+            minlength: "<span class='text-danger' style='font-size:small;'>This phone no must be minimum 10 digit required.</span>",
+            maxlength: "<span class='text-danger' style='font-size:small'>This phone no must be maximum 10 digit required.</span>",
+            pattern: "<span class='text-danger' style='font-size:small'>This phone no must be 0-9 digit only and only 10 digit allow. </span>"
+        },
+        "txtTime": {
             required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
         },
-        "txtTotime": {
+        "txtDate": {
             required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
         },
         "txtMsg": {
@@ -126,7 +150,7 @@ $("#btnSubmit").click(function (event) {
 
         $.ajax({
             type: "POST",
-            method : "POST",
+            method: "POST",
             url: "../crud.php?what=addappoi",
             data: json,
             dataType: "JSON",
@@ -180,7 +204,7 @@ $("#btnUpdate").click(function (event) {
 
         $.ajax({
             type: "POST",
-            method : "POST",
+            method: "POST",
             url: "../crud.php?what=upappoi",
             data: json,
             dataType: "JSON",

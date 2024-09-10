@@ -103,11 +103,11 @@ include("header.php");
                                         }
 
                                         if ($row['status'] == 'Admit') {
-                                            echo "<td><button type='button' class='btn custom-badge status-green active_block action-button' style='border-radius:4px;' data-id='" . $row['id'] . "'>Admit</button></td>";
+                                            // echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Admit</button></td>";
                                         } else {
-                                            echo "<td><button type='button' class='btn custom-badge status-red block_active action-button' style='border-radius:4px;' data-id='" . $row['id'] . "'>Discharge</button></td>";
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Discharge</button></td>";
                                         }
-
 
 
                                         echo "<td><a href='add-edit-in_patient.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
@@ -407,13 +407,7 @@ include("header.php");
             });
         });
     </script>
-    <!-- <script>
-        function updateExpiredPatientStatuses($cnn) {
-            $currentDate = date('Y-m-d');
-            $query = mysqli_query($cnn, "UPDATE b_patients SET status='Discharge' WHERE d_date < '$currentDate' AND status='Admit'");
-            return $query;
-        }
-    </script> -->
+
 </body>
 
 

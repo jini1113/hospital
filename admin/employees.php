@@ -84,11 +84,12 @@ include("header.php");
                                         echo "<td>" . $row['email'] . "</td>";
                                         echo "<td>" . $row['job'] . "</td>";
                                         if ($row['status'] == 'Active') {
-                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Active</button></td>";
+                                            // echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Active</button></td>";
                                         } else {
-
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active'  style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Block</button></td>";
                                         }
+
                                         // echo ' <td class="text-right">
                                         //     <div class="dropdown dropdown-action">
                                         //         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"

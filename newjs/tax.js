@@ -1,4 +1,4 @@
-// block department
+// block tax
 $("#tbl_tax").on("click", ".active_block", function () {
     const json = { "id": $(this).attr("data-id") };
     console.log(json);
@@ -36,7 +36,7 @@ $("#tbl_tax").on("click", ".active_block", function () {
         }
     });
 });
-// active department
+// active tax
 $("#tbl_tax").on("click", ".block_active", function () {
     const json = { "id": $(this).attr("data-id") };
     console.log(json);
@@ -74,6 +74,31 @@ $("#tbl_tax").on("click", ".block_active", function () {
         }
     });
 });
+$("#frm").validate({
+    rules: {
+        "txtName": {
+            required: true,
+        },
+
+        "txtPer": {
+            required: true,
+        },
+
+
+
+    },
+    messages: {
+        "txtName": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+        "txtPer": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+    },
+});
+
 // Add tax
 $("#btnSubmit").click(function (event) {
     event.preventDefault();

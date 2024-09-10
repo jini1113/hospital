@@ -1,4 +1,3 @@
-
 // block department
 $("#tbl_department").on("click", ".active_block", function () {
     const json = { "id": $(this).attr("data-id") };
@@ -75,14 +74,32 @@ $("#tbl_department").on("click", ".block_active", function () {
         }
     });
 });
+$("#frm").validate({
+    rules: {
+        "txtName": {
+            required: true,
+        },
+
+
+    },
+    messages: {
+        "txtName": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+
+    },
+});
+
 
 // Add In pationts
 $("#btnSubmit").click(function (event) {
     if ($("#frm").valid()) {
         event.preventDefault();
-        const json = { "txtName": $("#txtName").val(),
-           
-            };
+        const json = {
+            "txtName": $("#txtName").val(),
+
+        };
         console.log(json);
         $.ajax({
             type: "POST",
@@ -123,14 +140,15 @@ $("#btnSubmit").click(function (event) {
         });
     }
 });
-  // UPDATE IN pationts
-  $("#btnUpdate").click(function (event) {
+// UPDATE IN pationts
+$("#btnUpdate").click(function (event) {
     if ($("#frm").valid()) {
         event.preventDefault()
-        const json = { "txtUId": $("#txtUId").val(),
+        const json = {
+            "txtUId": $("#txtUId").val(),
             "txtName": $("#txtName").val(),
-           
-            };
+
+        };
         console.log(json);
         $.ajax({
             type: "POST",

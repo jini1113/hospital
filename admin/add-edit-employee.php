@@ -296,7 +296,7 @@ if (
 
                                         mail($to, $subject, $message, $headers);
 
-                                        echo "<script>window.location.replace('doctors.php');</script>";
+                                        echo "<script>window.location.replace('emplyoees.php');</script>";
                                     } else {
                                         echo "<script>alert('Some error occurred. Please try again.');</script>";
                                     }

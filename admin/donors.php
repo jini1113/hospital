@@ -75,25 +75,20 @@ include("header.php");
                                         echo "<td>" . $row['email'] . "</td>";
                                         echo "<td>" . $row['phone'] . "</td>";
                                         echo "<td>" . $row['date'] . "</td>";
+                                        // if ($row['status'] == 'Donate') {
+                                        //     echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Donate</button></td>";
+                                        // } else {
+                                    
+                                        //     echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active'  style='border-radius:4px;' data-id='" . $row['id'] . "'>Re-Donate</button></td>";
+                                        // }
                                         if ($row['status'] == 'Donate') {
-                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn custom-badge status-green active_block'   style='border-radius:4px;' data-id=" . $row['id'] . ">Donate</button></td>";
+                                            // echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Donate</button></td>";
                                         } else {
-
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn custom-badge status-red block_active'  style='border-radius:4px;' data-id='" . $row['id'] . "'>Re-Donate</button></td>";
+                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Re-Donate</button></td>";
                                         }
-                                        // echo ' <td class="text-right">
-                                        //     <div class="dropdown dropdown-action">
-                                        //         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                        //             aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                        //         <div class="dropdown-menu dropdown-menu-right">
-                                        //             <a class="dropdown-item" href="edit-department.html"><i
-                                        //                     class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        //             <a class="dropdown-item" href="#" data-toggle="modal"
-                                        //                 data-target="#delete_department"><i
-                                        //                     class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                        //         </div>
-                                        //     </div>
-                                        // </td>';
+
+                                     
                                         echo "<td><a href='add-edit-donor.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                         // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";

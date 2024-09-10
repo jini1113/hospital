@@ -1,7 +1,7 @@
 <?php
 include("../connection.php");
 include("header.php");
-session_start();
+// session_start();
 if (
     !isset($_SESSION["admin"]) || $_SESSION['admin'] == NULL ||
     $_SESSION["admin"] == ""
@@ -95,7 +95,6 @@ if (
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-6"></div>
                                         <div class="col-sm-6">
                                             <div class="imgBox">
@@ -147,8 +146,20 @@ if (
                                 $id = $_POST['txtUId'];
                                 $name = $_POST['txtName'];
                                 $capacity = $_POST['txtCap'];
+                                if (isset($_FILES['txtImg']) && !empty($_FILES['txtImg']['name'])) {
+                                    $query_chk = mysqli_query($cnn, "select * from staff where id=" . $id . "");
+                                    $row_chk = mysqli_fetch_array($query_chk);
+                                    if (!empty($row_chk['image']) && $row_chk['image'] != "" && file_exists("../image/" . $row_chk['image'])) {
+                                        unlink('../image/' . $row_chk['image']);
+                                    }
+                                    move_uploaded_file($_FILES['txtImg']['tmp_name'], "../image/" . $_FILES['txtImg']['name']);
+                                    $cols .= ",image='" . $_FILES['txtImg']['name'] . "'"; // Ensure this line is executed only if an image is uploaded
+                                }
+                                
+                                // Ensure $cols is initialized before concatenation
+                                $cols = "name='" . $name . "',capacity='" . $capacity . "'" . (isset($_FILES['txtImg']) && !empty($_FILES['txtImg']['name']) ? ",image='" . $_FILES['txtImg']['name'] . "'" : "");
 
-                                $cols = "name='" . $name . "',capacity='" . $capacity . "'";
+                       
 
 
 

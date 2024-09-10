@@ -1,3 +1,46 @@
+$("#frm").validate({
+    rules: {
+        "txtName": {
+            required: true,
+        },
+
+        "txtCap": {
+            required: true,
+        },
+        
+        "txtImg": {
+            required: true,
+        },
+
+
+    },
+    messages: {
+        "txtName": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+        "txtCap": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+        "txtImg": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+    },
+});
+//update image 
+$("#txtImg").on("change", function () {
+    var img = this;
+    console.log(img);
+    if (img.files && img.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $("#txtImport").attr("src", e.target.result);
+        }
+        reader.readAsDataURL(img.files[0]);
+    }
+
+});
 // block ward
 $("#tbl_ward").on("click", ".active_block", function () {
     const json = { "id": $(this).attr("data-id") };
@@ -82,7 +125,7 @@ $(document).ready(function () {
                 minlength: 3,
                 pattern: "^[a-zA-Z ]{3,}$",
             },
-            
+
             "txtCap": {
                 required: true,
             },
@@ -90,7 +133,7 @@ $(document).ready(function () {
             {
                 accept: "jpg,png,jpeg",
             },
-            
+
         },
         messages: {
 
@@ -110,7 +153,7 @@ $(document).ready(function () {
             {
                 accept: "<span class='text-danger' style='font-size:small;'>Image must be in jpg,png or jpeg format </span>",
             },
-            
+
         },
         submitHandler: function (form) {
             form.submit();

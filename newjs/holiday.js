@@ -1,3 +1,26 @@
+$("#frm").validate({
+    rules: {
+        "txtName": {
+            required: true,
+        },
+
+        "txtDate": {
+            required: true,
+        },
+
+
+    },
+    messages: {
+        "txtName": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+        "txtDate": {
+            required: "<span class='text-danger' style='font-size:small'>This field is required.</span>",
+        },
+
+    },
+});
 // Block department
 $("#tbl_holiday").on("click", ".active_block", function () {
     const json = { "id": $(this).attr("data-id") };
@@ -133,11 +156,12 @@ $("#btnSubmit").click(function (event) {
 $("#btnUpdate").click(function (event) {
     if ($("#frm").valid()) {
         event.preventDefault()
-        const json = { "txtUId": $("#txtUId").val(),
+        const json = {
+            "txtUId": $("#txtUId").val(),
             "txtName": $("#txtName").val(),
             "txtDate": $("#txtDate").val(),
-           
-            };
+
+        };
         console.log(json);
         $.ajax({
             type: "POST",

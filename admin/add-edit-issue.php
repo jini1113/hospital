@@ -34,6 +34,11 @@ if (isset($_GET['donor_id'])) {
     <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <style>
+        li a {
+            font-weight: 500;
+        }
+    </style>
     <!--[if lt IE 9]>
         <script src="assets/js/html5shiv.min.js"></script>
         <script src="assets/js/respond.min.js"></script>
@@ -337,7 +342,7 @@ if (isset($_GET['donor_id'])) {
                         </div>
                     </div>
                     <div class="card pt-5 pb-5 m-auto w-75 ">
-                        <div class="row">
+                        <div class="row">   
                             <div class="col-lg-8 offset-lg-2">
                                 <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="row">
