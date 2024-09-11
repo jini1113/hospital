@@ -68,10 +68,9 @@ include("header.php");
                                      
 
                                         if ($row['status'] == 'Available') {
-                                            // echo "<td>" . $row['id'] . "</td>";
-                                            echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Available</button></td>";
+                                            echo "<td><button type='button' class='btn btn-success' style='border-radius:4px;' data-id='" . $row['id'] . "'>Available</button></td>";
                                         } else {
-                                            echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Booked</button></td>";
+                                            echo "<td><button type='button' class='btn btn-danger' style='border-radius:4px;' data-id='" . $row['id'] . "'>Booked</button></td>";
                                         }
 
                                         echo "<td><a href='add-edit-bed.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>

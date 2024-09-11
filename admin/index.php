@@ -251,7 +251,6 @@ if (
                             <ul style="display: none;">
                                 <li><a href="ward.php">Ward Status</a></li>
                                 <li><a href="bed.php">Bed Status</a></li>
-                                <li><a href="blood-issue.php"> Blood Issue </a></li>
                             </ul>
                         </li>
                         <li class="submenu">

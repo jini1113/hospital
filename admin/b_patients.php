@@ -86,19 +86,22 @@ include("header.php");
 
                                         if (strtotime($row['d_date']) < time()) {
                                             $row['status'] = 'Discharge'; // Update status if d_date is expired
-                                    
-                                            // Update status in the database
-                                            $quer = "UPDATE b_patients SET status = '{$row['status']}' WHERE id = {$row['id']}";
-                                            mysqli_query($cnn, $quer);
+                                        
+                                            // Update status in the b_patients table
+                                            $quer = "UPDATE b_patients SET status = 'Discharge' WHERE id = {$row['id']}";
+                                            if (mysqli_query($cnn, $quer)) {
+                                                // If b_patients update is successful, update bed status to 'Available'
+                                                $quer1 = "UPDATE bed SET status = 'Available' WHERE id = {$row['bed_id']}";
+                                                mysqli_query($cnn, $quer1);
+                                            }
                                         }
-
-
+                                        
                                         if ($row['status'] == 'Admit') {
-                                            // echo "<td>" . $row['id'] . "</td>";
                                             echo "<td><button type='button' id='btnActive' name='btnActive' class='btn btn-success active_block' style='border-radius:4px;' data-id='" . $row['id'] . "'>Admit</button></td>";
                                         } else {
                                             echo "<td><button type='button' id='btnBlock' name='btnBlock' class='btn btn-danger block_active' style='border-radius:4px;' data-id='" . $row['id'] . "'>Discharge</button></td>";
                                         }
+
                                         echo "<td><a href='add-edit-b_patients.php?id=" . $row['id'] . "'><button type='button' id='btnEdit' name='btnEdit' title='Edit'  class='btn btn-link'>
                                         <i class='fa fa-pencil-square-o' aria-hidden='true' style='font-size:22px;font-weight:600;'></i></button></a></td>";
                                         // echo "<td><button type='button' id='btnView' name='btnView' title='View' data-toggle='modal' data-target='#viewModal'  class='btn view viewModal'  data-id=" . $row['id'] . " ><i class='icon-copy bi bi-eye-fill' style='font-weight:bold;' title='View'></i></button></td>";

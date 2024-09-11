@@ -37,47 +37,58 @@ $("#frm").validate({
 });
 $("#txtWard").on("change", function () {
     const wardId = $(this).val();
+    const patientId = $("#txtUId").val(); // Assuming "txtUId" is the patient ID
+
+    // Fetch available beds for the selected ward
     $.ajax({
         type: "POST",
         url: "../crud.php?what=getInBed",
         data: { wardId: wardId },
         dataType: "JSON",
         success: function (response) {
-            var s = "<option value=''>Select</option>";
-            for (var i = 0; i < response.length; i++) {
-                s += "<option value='" + response[i].id + "'>" + response[i].bed_no + "</option>";
+            var options = "<option value=''>Select</option>";
+            if (response.length > 0) {
+                for (var i = 0; i < response.length; i++) {
+                    if (response[i].status === 'available') { // Ensure bed status is 'available'
+                        options += `<option value='${response[i].id}'>${response[i].bed_no}</option>`;
+                    }
+                }
+            } else {
+                options += "<option value=''>No available beds</option>"; // Handle no beds case
             }
-            $("#txtBno").html(s);
+            $("#txtBno").html(options); // Update the Bed No. dropdown
         },
         error: function (xhr, status, error) {
             console.error("Error fetching beds:", error); // Log error
         }
     });
-});
-// Function to fetch current bed information when the ward changes
-$("#txtWard").on("change", function () {
-    const json = { "main": $("#txtUId").val(), "id": $(this).val() }; // Assuming "txtUId" is the patient ID
+
+    // Fetch current bed information when ward changes
     $.ajax({
         type: "POST",
         url: "../crud.php?what=getUpBed",
-        data: json,
+        data: { main: patientId, id: wardId },
         dataType: "JSON",
         success: function (response) {
             console.log(response); // Debugging line to check the response structure
-            var s = "<option value=''>Select</option>";
+            var options = "<option value=''>Select</option>";
             if (response.beds && response.beds.length > 0) {
-                // Loop through each bed and add it to the dropdown
                 for (var i = 0; i < response.beds.length; i++) {
-                    s += `<option value='${response.beds[i].id}' ${(response.bed_id == response.beds[i].id) ? "selected" : ""}>${response.beds[i].name}</option>`;
+                    if (response.beds[i].status === 'available') { // Ensure bed status is 'available'
+                        options += `<option value='${response.beds[i].id}' ${response.bed_id == response.beds[i].id ? "selected" : ""}>${response.beds[i].name}</option>`;
+                    }
                 }
             } else {
-                s += "<option value=''>No beds available</option>"; // Handle no beds case
+                options += "<option value=''>No available beds</option>"; // Handle no beds case
             }
-            $("#txtBno").html(s); // Update the Bed No. dropdown
+            $("#txtBno").html(options); // Update the Bed No. dropdown
         },
-        
+        error: function (xhr, status, error) {
+            console.error("Error fetching current bed information:", error); // Log error
+        }
     });
 });
+
 // Add b_patients
 $("#btnSubmit").click(function (event) {
     if ($("#frm").valid()) {
