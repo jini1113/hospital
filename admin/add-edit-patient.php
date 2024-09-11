@@ -55,7 +55,7 @@ if (
                     <div class="card pt-5 pb-5 m-auto w-75 ">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="frm">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
@@ -161,7 +161,7 @@ if (
                                     </div>
 
                                     <div class="m-t-20 text-center">
-                                        <button type="submit"
+                                        <button type="button"
                                             name="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             id="<?php echo isset($_GET['id']) ? 'btnUpdate' : 'btnSubmit'; ?>"
                                             class="btn btn-primary submit-btn">Save
@@ -169,100 +169,6 @@ if (
                                     </div>
                                 </form>
                             </div>
-                            <!-- insert code -->
-                            <?php
-                            if (isset($_POST['btnSubmit'])) {
-                                $name = $_POST['txtName'];
-                                $department = $_POST['txtDep'];
-                                $add = $_POST['txtAdd'];
-                                $state = $_POST['txtState'];
-                                $city = $_POST['txtCity'];
-                                $gen = $_POST['txtGen'];
-                                $dob = $_POST['txtDob'];
-                                $email = $_POST['txtMail'];
-                                $phone = $_POST['txtPhone'];
-
-                                // Generate random password
-                                $str_pass = "ABCDEFGHIJKLMNOPQRSTUSVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                                $pass = "";
-                                for ($i = 0; $i < 7; $i++) {
-                                    $rd = rand(0, strlen($str_pass) - 1);
-                                    $pass .= $str_pass[$rd];
-                                }
-                                $str_password = $pass;
-
-                                $chk_user = mysqli_query($cnn, "SELECT COUNT(*) FROM patients WHERE email = '$email'");
-                                $row_user = mysqli_fetch_array($chk_user);
-
-                                if ($row_user[0] > 0) {
-                                    echo "<script>alert('This email id is already registered. Please register with a new email id');</script>";
-                                } else {
-                                    $enc_pass = password_hash($pass, PASSWORD_DEFAULT);
-
-                                    $cols = "name, email, password, phone_no, dob, address, state_id, gender, status";
-                                    $values = "'$name', '$email', '$enc_pass', '$phone', '$dob', '$add', '$state', '$gen', 'Active'";
-
-
-
-                                    if (!empty($city)) {
-                                        $cols .= ", city_id";
-                                        $values .= ", '$city'";
-                                    } else {
-                                        $cols .= ", city_id";
-                                        $values .= ", '0'";
-                                    }
-
-                                    $query = mysqli_query($cnn, "INSERT INTO patients ($cols) VALUES ($values)");
-
-                                    if ($query) {
-                                        $to = $email;
-                                        $subject = "Login Details";
-                                        $message = "<p>Dear $name,</p>
-                                                <p>You are registered as a Doctor in our portal successfully.</p>
-                                                <p>Your credential details for login to the Hospital Management System portal are below:</p>
-                                                <p><table border='2'><tr><td style='padding:3px;'>Email:</td><td style='padding:3px;'>$email</td></tr><tr><td style='padding:3px;'>Password:</td><td style='padding:3px;'>$str_password</td></tr></table></p>";
-                                        $headers = "MIME-Version: 1.0" . "\r\n";
-                                        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                                        $headers .= "From: Hospital Management System";
-
-                                        mail($to, $subject, $message, $headers);
-
-                                        echo "<script>window.location.replace('patients.php');</script>";
-                                    } else {
-                                        echo "<script>alert('Some error occurred. Please try again.');</script>";
-                                    }
-                                }
-                            }
-                            // update code
-                            if (isset($_POST['btnUpdate'])) {
-                                $id = $_POST['txtUId'];
-                                $name = $_POST['txtName'];
-                                $add = $_POST['txtAdd'];
-                                $state = $_POST['txtState'];
-                                $city = $_POST['txtCity'];
-                                $gen = $_POST['txtGen'];
-                                $dob = $_POST['txtDob'];
-                                $email = $_POST['txtMail'];
-                                $phone = $_POST['txtPhone'];
-
-                                $cols = "name='" . $name . "',phone_no=" . $phone . "";
-
-                                $cols .= ",address='" . $add . "',state_id=" . $state . "";
-
-                                if ((isset($_POST['txtCity'])) && (!empty($_POST['txtCity']))) {
-                                    $cols .= ",city_id=" . $city . "";
-                                } else {
-                                    $cols .= ",city_id='0'";
-                                }
-                                $cols .= ",gender='" . $gen . "',dob='" . $dob . "'";
-                                $query = mysqli_query($cnn, "update patients set " . $cols . " where id=" . $id . "");
-                                if ($query > 0) {
-                                    echo "<script>window.location.replace('patients.php');</script>";
-                                } else {
-                                    echo "<script>alert('Some error occured.Please try again');</script>";
-                                }
-                            }
-                            ?>
                         </div>
                     </div>
                 </div>
